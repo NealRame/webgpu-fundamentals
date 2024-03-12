@@ -1,15 +1,15 @@
 import "./style.css"
 
 export class RenderApp {
-    protected static description_ = "App description"
+    protected static title_ = "App description"
 
     private canvas_: HTMLCanvasElement
     private context_: GPUCanvasContext
     private device_: GPUDevice
     private textureFormat_: GPUTextureFormat
 
-    static get description() {
-        return this.description_
+    static get title() {
+        return this.title_
     }
 
     static async create(canvas: HTMLCanvasElement) {

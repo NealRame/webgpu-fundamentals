@@ -1,10 +1,9 @@
-import "./style.css"
 import {
     RenderApp,
 } from "../../app"
 
 export default class extends RenderApp {
-    static description_ = "A red triangle rendered using hard-coded shaders."
+    static title_ = "Hardcoded red triangle shaders."
 
     private pipeline_: GPURenderPipeline
 

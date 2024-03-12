@@ -1,10 +1,13 @@
 import App from "./lessons/1"
 
-const canvas = document.querySelector<HTMLCanvasElement>("#screen")
-if (canvas == null) {
-    throw new Error("No canvas found.")
+const appEl = document.querySelector<HTMLElement>("#app")
+if (appEl == null) {
+    throw new Error("No app element found.")
 }
+const header = appEl.appendChild(document.createElement("header"))
+header.textContent = App.title
 
+const canvas = appEl.appendChild(document.createElement("canvas"))
 const app = await App.create(canvas)
 const observer = new ResizeObserver(entries => {
     for (const entry of entries) {
