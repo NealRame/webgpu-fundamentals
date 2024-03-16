@@ -1,10 +1,10 @@
 struct Attributes {
     color: vec4f,
+    scale: vec2f,
     offset: vec2f,
 };
 
 @group(0) @binding(0) var<uniform> u_attributes: Attributes;
-@group(0) @binding(1) var<uniform> u_scale: f32;
 
 @vertex
 fn vertex_main(
@@ -16,7 +16,7 @@ fn vertex_main(
         vec2f(0.5, -0.5),
     );
     return vec4<f32>(
-        pos[vertex_index]*u_scale + u_attributes.offset, 0, 1
+        pos[vertex_index]*u_attributes.scale + u_attributes.offset, 0, 1
     );
 }
 

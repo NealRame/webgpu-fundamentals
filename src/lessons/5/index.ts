@@ -3,43 +3,38 @@ import {
 } from "../../app"
 
 import {
-    randomColor,
-    randomFloat,
+    randomColor, randomFloat,
 } from "../../utils"
 
 import shader from "./shader.wgsl?raw"
 
-const kUniformBufferSize_0 =
+const uniformBufferSize =
     4*4 + // color:  vec4f
-    2*4 + // offset: vec2f
-    2*4   // padding
-
-const kUniformBufferSize_1 =
-    2*4   // scale:  vec2f
-
-const kUniformBufferSizes = [
-    kUniformBufferSize_0,
-    kUniformBufferSize_1,
-]
+    2*4 + // scale:  vec2f
+    2*4   // offset: vec2f
 
 const kColorOffset  = 0
-const kOffsetOffset = 4
+const kScaleOffset  = 4
+const kOffsetOffset = 6
 
-const kScaleOffset  = 0
+const kNumObjects = 10
 
-const kNumObjects = 20
-
-type ObjectInfo = {
+type TObjectInfo = {
     scale: number,
+    values: Float32Array,
+    buffer: GPUBuffer,
     bindGroup: GPUBindGroup,
-    uniforms: Array<[GPUBuffer, Float32Array]>
 }
 
 export default class extends RenderApp {
-    static title_ = "Triangle shaders with several uniforms."
+    static title_ = "Triangle shaders with uniforms."
 
     private pipeline_: GPURenderPipeline
-    private objectsInfo: Array<ObjectInfo>
+    private objectInfos_: Array<TObjectInfo> = []
+
+    // private uniformBuffer_: GPUBuffer
+    // private bindGroup_: GPUBindGroup
+
 
     constructor(
         canvas: HTMLCanvasElement,
@@ -48,12 +43,12 @@ export default class extends RenderApp {
         super(canvas, device)
 
         const module = device.createShaderModule({
-            label: "triangle with several uniforms - shader",
+            label: "Triangle shaders with uniforms",
             code: shader,
         })
 
         this.pipeline_ = this.device.createRenderPipeline({
-            label: "triangle with several uniforms - pipeline",
+            label: "triangle with uniforms - pipeline",
             layout: "auto",
             vertex: {
                 module,
@@ -68,43 +63,33 @@ export default class extends RenderApp {
             },
         })
 
-        this.objectsInfo = []
         for (let i = 0; i < kNumObjects; ++i) {
-            const uniforms = kUniformBufferSizes.map(size => {
-                const uniformValues = new Float32Array(size/4)
-                const uniformBuffer = device.createBuffer({
-                    label: `triangle with several uniforms - uniform buffer #${i}`,
-                    size: uniformValues.byteLength,
-                    usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-                })
-                return [uniformBuffer, uniformValues] as [GPUBuffer, Float32Array]
+            const values = new Float32Array(uniformBufferSize/4)
+            const buffer = device.createBuffer({
+                label: `object ${i} buffer`,
+                size: uniformBufferSize,
+                usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
             })
-
             const bindGroup = device.createBindGroup({
-                label: `triangle with several uniforms - bind group #${i}`,
                 layout: this.pipeline_.getBindGroupLayout(0),
-                entries: uniforms.map(([buffer, ], binding) => ({
-                    binding,
+                entries: [{
+                    binding: 0,
                     resource: {
                         buffer,
                     },
-                }))
+                }],
             })
+            const color = randomColor()
+            const scale = randomFloat(0.2, 0.6)
+            const offset = [randomFloat(-.9, .9), randomFloat(-.9, .9)]
 
-            const [colorAndOffsetBuffer, colorAndOffsetValue] = uniforms[0]
-
-            colorAndOffsetValue.set(randomColor(), kColorOffset)
-            colorAndOffsetValue.set([
-                randomFloat(-.9, .9),
-                randomFloat(-.9, .9),
-            ], kOffsetOffset)
-            this.device.queue.writeBuffer(colorAndOffsetBuffer, 0, colorAndOffsetValue)
-            this.objectsInfo.push({
-                uniforms,
+            values.set(color, kColorOffset)
+            values.set(offset, kOffsetOffset)
+            this.objectInfos_.push({
+                scale,
+                values,
+                buffer,
                 bindGroup,
-                scale: [randomFloat(-.6, -.1), randomFloat(0.1, 0.6)][
-                    Math.random() > 0.5 ? 0 : 1
-                ],
             })
         }
     }
@@ -112,11 +97,10 @@ export default class extends RenderApp {
     public render_() {
         const aspect = this.canvas.width/this.canvas.height
         const encoder = this.device.createCommandEncoder({
-            label: "triangle with several uniforms - encoder",
+            label: "triangle with uniforms - encoder",
         })
-
         const pass = encoder.beginRenderPass({
-            label: "triangle with several uniforms - render pass",
+            label: "triangle with uniforms - render pass",
             colorAttachments: [{
                 view: this.context.getCurrentTexture().createView(),
                 clearValue: { r: 0.3, g: 0.3, b: 0.3, a: 1 },
@@ -126,19 +110,18 @@ export default class extends RenderApp {
         })
 
         pass.setPipeline(this.pipeline_)
-        this.objectsInfo.forEach(info => {
-            const [scaleUniform, scaleValue] = info.uniforms[1]
-            scaleValue.set([
-                info.scale/aspect,
-                info.scale
-            ], kScaleOffset)
-            this.device.queue.writeBuffer(scaleUniform, 0, scaleValue)
-
-            pass.setBindGroup(0, info.bindGroup)
+        this.objectInfos_.forEach(({
+            scale,
+            values,
+            buffer,
+            bindGroup,
+        }) => {
+            values.set([scale/aspect, scale], kScaleOffset)
+            this.device.queue.writeBuffer(buffer, 0, values)
+            pass.setBindGroup(0, bindGroup)
             pass.draw(3)
         })
         pass.end()
-
         return [encoder.finish()]
     }
 }
