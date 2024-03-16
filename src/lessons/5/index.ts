@@ -32,10 +32,6 @@ export default class extends RenderApp {
     private pipeline_: GPURenderPipeline
     private objectInfos_: Array<TObjectInfo> = []
 
-    // private uniformBuffer_: GPUBuffer
-    // private bindGroup_: GPUBindGroup
-
-
     constructor(
         canvas: HTMLCanvasElement,
         device: GPUDevice,
