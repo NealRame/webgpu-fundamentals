@@ -1,4 +1,4 @@
-import App from "./lessons/9"
+import App from "./lessons/10"
 
 const appEl = document.querySelector<HTMLElement>("#app")
 if (appEl == null) {
