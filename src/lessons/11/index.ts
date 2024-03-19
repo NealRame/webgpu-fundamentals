@@ -23,7 +23,7 @@ const kScaleUnitSize = 2
 const kScaleOffset = 0
 
 export default class extends RenderApp {
-    static title_ = "Triangle shaders with vertex buffers multiple instances #1."
+    static title_ = "Triangle shaders with vertex buffers multiple instances #2."
 
     private pipeline_: GPURenderPipeline
 
@@ -94,8 +94,6 @@ export default class extends RenderApp {
 
         const { vertexData, verticeCount } = createCircleVertices({
             subdivisions: kSubdivisions,
-            startAngle: Math.PI/6,
-            endAngle: 2*Math.PI - Math.PI/6,
         })
 
         const attributesValues = new Float32Array(kObjectCount*kAttributesUnitSize)
