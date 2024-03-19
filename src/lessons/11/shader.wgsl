@@ -3,6 +3,7 @@ struct Vertex {
     @location(1) offset: vec2f,
     @location(2) color: vec4f,
     @location(3) scale: vec2f,
+    @location(4) per_vertex_color: vec3f,
 };
 
 struct VSOutput {
@@ -17,7 +18,7 @@ fn vertex_main(
 ) -> VSOutput {
     return VSOutput(
         vec4f(input.position*input.scale + input.offset, 0, 1),
-        input.color
+        input.color*vec4(input.per_vertex_color, 1),
     );
 }
 

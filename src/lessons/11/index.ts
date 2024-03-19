@@ -11,13 +11,17 @@ import {
 import shader from "./shader.wgsl?raw"
 
 
-const kObjectCount = 4
+const kObjectCount = 8
 
-const kSubdivisions = 64
+const kSubdivisions = 16
+
+const kVertexUnitSize = 5
+const kVertexPositionOffset = 0
+const kVertexColorOffset = 2
 
 const kAttributesUnitSize = 6
 const kOffsetAttributeOffset = 0
-const kColorAttributeOffset  = 2
+const kColorAttributeOffset = 2
 
 const kScaleUnitSize = 2
 const kScaleOffset = 0
@@ -54,11 +58,15 @@ export default class extends RenderApp {
                 module,
                 entryPoint: "vertex_main",
                 buffers: [{
-                    arrayStride: 2*4,
+                    arrayStride: 4*kVertexUnitSize,
                     attributes: [{
                         shaderLocation: 0,
                         offset: 0,
                         format: "float32x2",
+                    }, {
+                        shaderLocation: 4,
+                        offset: 8,
+                        format: "float32x3",
                     }],
                     stepMode: "vertex",
                 }, {
@@ -95,6 +103,14 @@ export default class extends RenderApp {
         const { vertexData, verticeCount } = createCircleVertices({
             subdivisions: kSubdivisions,
         })
+        const vertexValues = new Float32Array(kVertexUnitSize*vertexData.length)
+        for (let i = 0; i < verticeCount; ++i) {
+            const pos = vertexData.slice(2*i, 2*i + 2)
+            const rgb = randomColor().slice(0, 3)
+            const offset = kVertexUnitSize*i
+            vertexValues.set(pos, offset + kVertexPositionOffset)
+            vertexValues.set(rgb, offset + kVertexColorOffset)
+        }
 
         const attributesValues = new Float32Array(kObjectCount*kAttributesUnitSize)
         for (let i = 0; i < kObjectCount; ++i) {
@@ -111,11 +127,11 @@ export default class extends RenderApp {
 
         this.vertexBuffer_ = device.createBuffer({
             label: "vertex buffer",
-            size: vertexData.byteLength,
+            size: vertexValues.byteLength,
             usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
         })
         this.vertexCount_ = verticeCount
-        this.device.queue.writeBuffer(this.vertexBuffer_, 0, vertexData)
+        this.device.queue.writeBuffer(this.vertexBuffer_, 0, vertexValues)
 
         this.attributesBuffer_ = device.createBuffer({
             label: "attributes buffer",
