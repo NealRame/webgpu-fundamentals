@@ -47,6 +47,60 @@ export function createCircleVertices({
     }
 }
 
+
+export function createCircleVerticesWithIndex({
+    outerRadius = 1.0,
+    innerRadius = 0.5,
+    subdivisions = 32,
+    startAngle = 0,
+    endAngle = 2*Math.PI,
+}) {
+    const angle = endAngle - startAngle
+    const verticeCount = 2*(subdivisions + 1)
+    
+    const vertexData = new Float32Array(2*verticeCount)
+    const indexData = new Uint32Array(6*subdivisions)
+
+    let vertexDataOffset = 0
+    const addVertex = (x: number, y: number) => {
+        vertexData[vertexDataOffset++] = x
+        vertexData[vertexDataOffset++] = y
+    }
+
+    for (let i = 0; i <= subdivisions; ++i) {
+        const alpha = startAngle + (i + 0)*(angle/subdivisions)
+        const cosAlpha = Math.cos(alpha)
+        const sinAlpha = Math.sin(alpha)
+
+        addVertex(cosAlpha*outerRadius, sinAlpha*outerRadius)
+        addVertex(cosAlpha*innerRadius, sinAlpha*innerRadius)
+    }
+
+    // 0---2---3
+    // | //| //|
+    // |// |// |
+    // 1---3---4
+    let indexDataOffset = 0
+    for (let i = 0; i < subdivisions; ++i) {
+        const offset = i*2
+
+        indexData[indexDataOffset++] = offset + 0
+        indexData[indexDataOffset++] = offset + 1
+        indexData[indexDataOffset++] = offset + 2
+
+        indexData[indexDataOffset++] = offset + 3
+        indexData[indexDataOffset++] = offset + 2
+        indexData[indexDataOffset++] = offset + 1
+    }
+
+    return {
+        indexData,
+        vertexData,
+        verticeCount: indexData.length,
+    }
+}
+
+
 export function randomFloat(min: number, max: number) {
     return Math.random()*(max - min) + min
 }
