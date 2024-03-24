@@ -13,13 +13,13 @@ const b = [  0,   0, 255, 255] // blue
 const y = [255, 255,   0, 255] // yellow
 
 const kTextureData = new Uint8Array([
-    b, _, _, _, _,
-    _, y, y, y, _,
+    _, _, _, _, _,
+    _, y, _, _, _,
     _, y, _, _, _,
     _, y, y, _, _,
     _, y, _, _, _,
-    _, y, _, _, _,
-    _, _, _, _, _,
+    _, y, y, y, _,
+    b, _, _, _, _,
 ].flat())
 
 export default class extends RenderApp {
