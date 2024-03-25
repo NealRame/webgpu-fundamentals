@@ -1,5 +1,7 @@
 import App from "./lessons/14"
 
+import "./style.css"
+
 const appEl = document.querySelector<HTMLElement>("#app")
 if (appEl == null) {
     throw new Error("No app element found.")

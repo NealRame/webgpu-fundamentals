@@ -1,5 +1,3 @@
-import "./style.css"
-
 export class RenderApp {
     protected static title_ = "App description"
 

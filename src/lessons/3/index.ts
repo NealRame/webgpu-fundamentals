@@ -1,6 +1,6 @@
 import {
     RenderApp,
-} from "../../app"
+} from "../render"
 
 import shader from "./shader.wgsl?raw"
 
