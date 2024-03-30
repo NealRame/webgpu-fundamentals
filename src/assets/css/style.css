@@ -1,11 +1,11 @@
 :root {
     --bg-color: #242424;
-    --bg-color-hover: rgba(255, 255, 255, 0.1);
+    --bg-color-hover: rgba(255, 255, 255, 0.2);
 
     --fg-color: rgba(255, 255, 255, 0.87);
 
 
-    --border-color: var(--fg-color);
+    --border-color: rgba(255, 255, 255, 0.5);
     --border-radius: 0.25rem;
 
     --text-color: var(--fg-color);
