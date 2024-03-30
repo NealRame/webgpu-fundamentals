@@ -113,3 +113,19 @@ export function randomColor(): RGBA {
         1
     ]
 }
+
+
+export function isNil(value: any) {
+    return value == null
+}
+
+
+export function elementHas(
+    el: Element | null,
+    target: Element
+): boolean {
+    if (el !== target) {
+        return Array.from(el?.children ?? []).some(child => elementHas(child, target))
+    }
+    return true
+}

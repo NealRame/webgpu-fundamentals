@@ -1,5 +1,6 @@
 export class RenderApp {
-    protected static title_ = "App description"
+    protected static title_ = "App Title"
+    protected static description_ = "App Description"
 
     private canvas_: HTMLCanvasElement
     private context_: GPUCanvasContext
@@ -8,6 +9,10 @@ export class RenderApp {
 
     static get title() {
         return this.title_
+    }
+
+    static get description() {
+        return this.description_
     }
 
     static async create(canvas: HTMLCanvasElement) {
