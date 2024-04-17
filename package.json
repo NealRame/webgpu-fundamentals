@@ -4,22 +4,23 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "node scripts/build/serve.js",
+    "build": "node scripts/build/build.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
-    "@vitejs/plugin-vue": "^5.0.4",
     "@vueuse/core": "^10.9.0",
     "@webgpu/types": "^0.1.40",
+    "esbuild": "^0.20.2",
+    "esbuild-plugin-glsl": "^1.2.2",
+    "esbuild-plugin-tsc": "^0.4.0",
+    "esbuild-plugin-vue3": "^0.4.2",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.24.0",
-    "sass": "^1.72.0",
+    "portscanner": "^2.2.0",
     "typescript": "^5.4.3",
-    "vite": "^5.2.7",
     "vue": "^3.4.21",
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^2.0.7"
