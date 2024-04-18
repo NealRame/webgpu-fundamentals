@@ -1,0 +1,23 @@
+<svg id="Logo"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="768"
+    height="600"
+    viewBox="0 0 768 600"
+>
+    <defs>
+        <style>
+            path {
+                fill: #fff;
+                fill-rule: evenodd;
+                stroke: #000;
+                stroke-linejoin: round;
+            }
+        </style>
+    </defs>
+    <path d="m626.63 295.5-60.189-104.25h120.55z"/>
+    <path d="m626.63 87.001-60.189 104.25h120.55z"/>
+    <path d="m506.26 504-120.38-208.5 240.76-2e-3z"/>
+    <path d="m506.26 87-120.38 208.5 240.76-2e-3z"/>
+    <path d="m265.5 504-240.76-417h481.51z"/>
+</svg>
