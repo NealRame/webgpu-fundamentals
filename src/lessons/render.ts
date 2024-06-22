@@ -1,4 +1,12 @@
-export class RenderApp {
+export interface IRenderApp {
+    readonly canvas: HTMLCanvasElement
+    readonly device: GPUDevice
+    readonly context: GPUCanvasContext
+    readonly textureFormat: GPUTextureFormat
+    render: () => void
+}
+
+export class RenderApp implements IRenderApp {
     protected static title_ = "App Title"
     protected static description_ = "App Description"
 
