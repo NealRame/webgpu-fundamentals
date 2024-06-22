@@ -10,10 +10,17 @@ const AngleRight = defineComponent({
     })
 })
 
+const Settings = defineComponent({
+    setup: () => () => h("i", {
+        class: "fa-solid fa-gear",
+    })
+})
+
 const IconsPlugin = {
     install: (application: App) => {
         application
             .component("IconAngleRight", AngleRight)
+            .component("IconSettings", Settings)
     }
 }
 

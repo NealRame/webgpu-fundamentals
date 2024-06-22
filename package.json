@@ -13,7 +13,7 @@
     "@typescript-eslint/parser": "^7.4.0",
     "@vueuse/core": "^10.9.0",
     "@webgpu/types": "^0.1.40",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.5",
     "esbuild-plugin-copy": "^2.1.1",
     "esbuild-plugin-glsl": "^1.2.2",
     "esbuild-plugin-tsc": "^0.4.0",
