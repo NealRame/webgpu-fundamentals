@@ -1,4 +1,3 @@
-// 
 import {
     createApp,
     h,
@@ -7,7 +6,7 @@ import {
 import App from "./components/App.vue"
 import Icons from "./components/Icons.ts"
 
-import "./assets/css/style.css"
+import Router from "./router"
 
 (function () {
     const app = createApp({
@@ -15,5 +14,7 @@ import "./assets/css/style.css"
     })
     app
         .use(Icons)
+        .use(Router)
         .mount("#app")
 })()
+

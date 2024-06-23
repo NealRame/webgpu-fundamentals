@@ -1,7 +1,6 @@
 import {
     defineComponent,
     h,
-    inject,
 } from "vue"
 
 import {
@@ -10,10 +9,6 @@ import {
     isRangeFieldConfig,
     isColorRGBAFieldConfig,
 } from "../../decorators"
-
-import {
-    KCurrentRenderApp,
-} from "../../keys"
 
 import {
     truthy,
@@ -26,14 +21,15 @@ import {
 import {
     ColorRGBAField,
 } from "./ColorRGBAFieldComponent"
+import { IRenderApp } from "../../lessons"
 
 
-export default defineComponent(() => {
-    const renderApp = inject(KCurrentRenderApp);
-
+export default defineComponent((props: {
+    renderApp: IRenderApp | null
+}) => {
     return () => {
-        if (renderApp?.value != null) {
-            const meta = getModelMetadata(renderApp?.value.constructor as TConstructor)
+        if (props.renderApp != null) {
+            const meta = getModelMetadata(props.renderApp.constructor as TConstructor)
             const fields = Object.values(meta)
                 .map(fieldMeta => {
                     if (isRangeFieldConfig(fieldMeta)) {
