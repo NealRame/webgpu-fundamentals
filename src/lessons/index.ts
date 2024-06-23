@@ -1,20 +1,22 @@
 import Lesson1 from "./1"
+import { IRenderApp } from "./render"
 
 export const Lessons = {
     "1": Lesson1
 }
 
-type TLessonId = keyof typeof Lessons
-
-export * from "./render"
-
-export function isLesson(id: string): id is TLessonId {
+function isLesson(id: string): id is (keyof typeof Lessons) {
     return id in Lessons
 }
 
-export function createLesson(id: string, canvas: HTMLCanvasElement) {
-    if (isLesson(id)) {
-        return Lessons[id].create(canvas)
+export function createLesson(
+    id: string,
+    canvas: HTMLCanvasElement,
+): Promise<IRenderApp> {
+    if (!isLesson(id)) {
+        throw Error(`No such lesson #${id}!`)
     }
-    return null
+    return Lessons[id].create(canvas)
 }
+
+export * from "./render"

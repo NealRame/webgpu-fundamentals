@@ -20,7 +20,6 @@ import {
 
 import {
     type IRenderApp,
-    isLesson,
     createLesson,
 } from "../lessons"
 
@@ -35,6 +34,7 @@ const { id } = defineProps({
 })
 
 const canvas = ref<HTMLCanvasElement | null>(null)
+const error  = ref<Error | null>(null)
 const lesson = ref<IRenderApp | null>(null)
 
 const { size } = useResize(canvas, window.devicePixelRatio)
@@ -44,23 +44,24 @@ const lessonHasSettings = computed(() => hasModelMetadata(unref(lesson)?.constru
 
 watch(canvas, async canvas => {
     if (canvas) {
-        lesson.value = await createLesson(id, canvas)
+        try {
+            lesson.value = await createLesson(id, canvas)
+            lesson.value?.render()
+        } catch (err) {
+            if (err instanceof Error) {
+                error.value = err
+            }
+        }
     } else {
         lesson.value = null
     }
 })
 
-watch([lesson, size, ], ([renderApp, size, ]) => {
-    if (renderApp) {
-        canvas.value!.width = Math.max(Math.min(
-            size.width,
-            renderApp.device.limits.maxTextureDimension2D,
-        ), 1)
-        canvas.value!.height = Math.max(Math.min(
-            size.height,
-            renderApp.device.limits.maxTextureDimension2D,
-        ), 1)
-        renderApp.render()
+watch(size, size => {
+    if (canvas.value) {
+        canvas.value.width = size.width
+        canvas.value.height = size.height
+        lesson.value?.render()
     }
 })
 
@@ -68,13 +69,12 @@ watch([lesson, size, ], ([renderApp, size, ]) => {
 
 <template>
     <div
-        v-if="!isLesson(id)"
+        v-if="error"
         class="absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] text-red"
-    >No such lesson #{{ id }}!</div>
+    >{{ error.message }}</div>
     <canvas
-        v-else
         ref="canvas"
-    >Your browser does not support the HTML5 canvas tag.</canvas>
+    ></canvas>
     <footer
         v-if="lessonHasSettings"
         class="absolute block bottom-0 p-4 z-10"
