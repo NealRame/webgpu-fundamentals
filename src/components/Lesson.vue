@@ -54,9 +54,22 @@ watch(canvas, async canvas => {
 
 watch(size, size => {
     if (canvas.value) {
-        canvas.value.width = size.width
-        canvas.value.height = size.height
-        lesson.value?.render()
+        const { width, height } = size
+
+        if (lesson.value) {
+            canvas.value.width = Math.max(1, Math.min(
+                lesson.value.device.limits.maxTextureDimension2D,
+                width,
+            ))
+            canvas.value.height = Math.max(1, Math.min(
+                lesson.value.device.limits.maxTextureDimension2D,
+                height,
+            ))
+            lesson.value.render()
+        } else {
+            canvas.value.width = width
+            canvas.value.height = height
+        }
     }
 })
 
