@@ -26,12 +26,12 @@ export class RenderApp implements IRenderApp {
     static async create(canvas: HTMLCanvasElement) {
         const gpu = navigator.gpu
         if (gpu == null) {
-            throw new Error("No WebGPU support.")
+            throw new Error("No WebGPU support!")
         }
 
         const adapter = await gpu.requestAdapter()
         if (adapter == null) {
-            throw new Error("No adapter found.")
+            throw new Error("No adapter found!")
         }
 
         const device = await adapter.requestDevice()
@@ -47,7 +47,7 @@ export class RenderApp implements IRenderApp {
         const context = canvas.getContext("webgpu")
 
         if (context == null) {
-            throw new Error("Failed to get a webgpu context.")
+            throw new Error("Failed to get a webgpu context!")
         } else {
             context.configure({
                 device,
