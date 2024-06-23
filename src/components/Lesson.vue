@@ -4,15 +4,9 @@ export default { name: "Lesson" }
 
 <script setup lang="ts">
 import {
-    computed,
     ref,
-    unref,
     watch,
 } from "vue"
-
-import {
-    hasModelMetadata,
-} from "../decorators"
 
 import {
     useResize,
@@ -22,8 +16,6 @@ import {
     type IRenderApp,
     createLesson,
 } from "../lessons"
-
-import AppInspector from "./AppInspector"
 
 
 const { id } = defineProps({
@@ -37,9 +29,12 @@ const canvas = ref<HTMLCanvasElement | null>(null)
 const error  = ref<Error | null>(null)
 const lesson = ref<IRenderApp | null>(null)
 
+// the canvas element style must match {
+//    display: block;
+//    width: 100%;
+//    height: 100%;
+// }
 const { size } = useResize(canvas, window.devicePixelRatio)
-
-const lessonHasSettings = computed(() => hasModelMetadata(unref(lesson)?.constructor))
 
 
 watch(canvas, async canvas => {
@@ -73,10 +68,7 @@ watch(size, size => {
         class="absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] text-red"
     >{{ error.message }}</div>
     <canvas
+        class="block w-full h-full"
         ref="canvas"
     ></canvas>
-    <footer
-        v-if="lessonHasSettings"
-        class="absolute block bottom-0 p-4 z-10"
-    ><AppInspector :render-app="lesson"/></footer>
 </template>
