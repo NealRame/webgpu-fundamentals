@@ -4,7 +4,6 @@ export default { name: "Lesson" }
 
 <script setup lang="ts">
 import {
-    computed,
     provide,
     ref,
     watch,
@@ -23,10 +22,6 @@ import {
     KCurrentRenderApp,
 } from "../keys"
 
-import {
-    hasModelMetadata,
-} from "../decorators"
-
 import AppInspector from "./AppInspector"
 
 
@@ -40,9 +35,6 @@ const { id } = defineProps({
 const canvas = ref<HTMLCanvasElement | null>(null)
 const error  = ref<Error | null>(null)
 const lesson = ref<IRenderApp | null>(null)
-const lessonHasSettings = computed(() => {
-    return hasModelMetadata(lesson.value?.constructor)
-})
 
 // the canvas element style must match {
 //    display: block;
