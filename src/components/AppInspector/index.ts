@@ -1,6 +1,8 @@
 import {
     defineComponent,
     h,
+    inject,
+    unref,
 } from "vue"
 
 import {
@@ -9,6 +11,10 @@ import {
     isRangeFieldConfig,
     isColorRGBAFieldConfig,
 } from "../../decorators"
+
+import {
+    KCurrentRenderApp,
+} from "../../keys"
 
 import {
     truthy,
@@ -21,45 +27,50 @@ import {
 import {
     ColorRGBAField,
 } from "./ColorRGBAFieldComponent"
-import { IRenderApp } from "../../lessons"
 
+const InspectorForm = defineComponent(() => {
+    const classes = [
+        "gap-x-1",
+        "gap-y-4",
+        "grid",
+        "grid-cols-[auto_1fr_3rem]",
+        "text-sm",
+        "text-white"
+    ].join(" ")
+    const lesson = unref(inject(KCurrentRenderApp))!
 
-export default defineComponent((props: {
-    renderApp: IRenderApp | null
-}) => {
     return () => {
-        if (props.renderApp != null) {
-            const meta = getModelMetadata(props.renderApp.constructor as TConstructor)
-            const fields = Object.values(meta)
-                .map(fieldMeta => {
-                    if (isRangeFieldConfig(fieldMeta)) {
-                        return h(RangeField, {
-                            fieldMeta,
-                        })
-                    }
-                    if (isColorRGBAFieldConfig(fieldMeta)) {
-                        return h(ColorRGBAField, {
-                            fieldMeta,
-                        })
-                    }
-                    return null
-                })
-                .filter(truthy)
-            return [
-                h("form", {
-                    style: {
-                        backgroundColor: "var(--bg-color)",
-                        boxSizing: "border-box",
-                        border: "1px solid var(--border-color)",
-                        borderRadius: "var(--border-radius)",
-                        display: "grid",
-                        gridTemplateColumns: "auto 1fr 3rem",
-                        gap: ".25rem 1rem",
-                        fontSize: "smaller",
-                        padding: ".25rem .5rem",
-                    }
-                }, fields)
-            ]
-        }
+        const meta = getModelMetadata(lesson.constructor as TConstructor)
+        const fields = Object.values(meta)
+            .map(fieldMeta => {
+                if (isRangeFieldConfig(fieldMeta)) {
+                    return h(RangeField, {
+                        fieldMeta,
+                    })
+                }
+                if (isColorRGBAFieldConfig(fieldMeta)) {
+                    return h(ColorRGBAField, {
+                        fieldMeta,
+                    })
+                }
+                return null
+            })
+            .filter(truthy)
+        
+        return [h("form", {
+            class: classes,
+        }, fields)]
+    }
+})
+
+export default defineComponent(() => {
+    return () => {
+        const lesson = unref(inject(KCurrentRenderApp))
+
+        if (lesson != null) {
+            return h("div", {
+                    class: "absolute bottom-1 left-1 rounded bg-base bg-opacity-50 p-2",
+                }, [h(InspectorForm)])
+            }
     }
 })

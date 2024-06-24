@@ -19,10 +19,47 @@ const onInput = (event: Event) => {
     const value = Number(target.value)
     emit("update:modelValue", value)
 }
+
+const inputRangeStyle = [
+    "w-full",
+    "bg-transparent",
+    "cursor-pointer",
+    "appearance-none",
+    "disabled:opacity-50",
+    "disabled:pointer-events-none",
+    "focus:outline-none",
+
+    "[&::-webkit-slider-thumb]:w-2",
+    "[&::-webkit-slider-thumb]:h-full",
+    "[&::-webkit-slider-thumb]:appearance-none",
+    "[&::-webkit-slider-thumb]:bg-red",
+    "[&::-webkit-slider-thumb]:transition-all",
+    "[&::-webkit-slider-thumb]:duration-150",
+    "[&::-webkit-slider-thumb]:ease-in-out",
+    "[&::-webkit-slider-thumb]:rounded",
+
+    "[&::-moz-range-thumb]:w-2",
+    "[&::-moz-range-thumb]:h-full",
+    "[&::-moz-range-thumb]:appearance-none",
+    "[&::-moz-range-thumb]:bg-red",
+    "[&::-moz-range-thumb]:transition-all",
+    "[&::-moz-range-thumb]:duration-150",
+    "[&::-moz-range-thumb]:ease-in-out",
+
+    "[&::-webkit-slider-runnable-track]:w-full",
+    "[&::-webkit-slider-runnable-track]:h-3",
+    "[&::-webkit-slider-runnable-track]:bg-gray-500",
+    "[&::-webkit-slider-runnable-track]:rounded",
+
+    "[&::-moz-range-track]:w-full",
+    "[&::-moz-range-track]:h-3",
+    "[&::-moz-range-track]:bg-gray-100",
+]
 </script>
 
 <template>
     <input
+        :class="inputRangeStyle"
         type="range"
         :min="min ?? 0"
         :max="max ?? 1"
@@ -31,41 +68,3 @@ const onInput = (event: Event) => {
         @input="onInput"
     >
 </template>
-
-<style lang="css" scoped>
-/* Code stolen from https://codepen.io/t_afif/pen/KKGpmGE */
-input {
-    --c1: var(--fg-color, orange);                           /* fill color */
-    --c2: color-mix(in srgb, var(--c1), var(--bg-color));     /* empty color */
-    --g: 4px;                                                     /* the gap */
-    --l: 2px;                                               /* line thickness*/
-    --s: 8px;                                                   /* thumb size*/
-    --r: 2px;                                         /* thumb border radius */
-    --_c: color-mix(in srgb, var(--c1), white);
-    -webkit-appearance :none;
-    -moz-appearance :none;
-    appearance :none;
-    background: none;
-    cursor: pointer;
-    overflow: hidden;
-}
-input:active,
-input:focus-visible {
-  --_b: var(--s);
-  --_c: color-mix(in srgb, var(--c1), cyan);
-}
-/* chromium */
-input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    -webkit-appearance: none;
-    aspect-ratio: 1;
-    height: var(--s);
-    box-shadow: 0 0 0 var(--_b, var(--l)) inset var(--_c);
-    border-image:
-        linear-gradient(90deg, var(--_c) 50%, var(--c2) 0) 0 1
-            / calc(50% - var(--l)/2) 100vw
-            / 0 calc(100vw + var(--g));
-    border-radius: var(--r);
-    transition: var(--transition-duration-slow, 0);
-}
-</style>
