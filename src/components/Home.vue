@@ -7,15 +7,21 @@ import {
     Lessons,
 } from "../lessons"
 
-const style = ["text-blue"]
-
+const linkStyle = ["text-blue", "hover:text-green"]
+const listStyle = [
+    "absolute",
+    "left-1/2",
+    "top-1/2",
+    "translate-x-[-50%]",
+    "translate-y-[-50%]",
+]
 </script>
 
 <template>
-    <ul class="absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]">
+    <ul :class="listStyle">
         <li v-for="(_, id) in Lessons">
             <RouterLink
-                :class="style"
+                :class="linkStyle"
                 :to="{
                     name: 'lesson',
                     params: {
