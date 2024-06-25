@@ -1,5 +1,6 @@
 import {
     colorRGBA,
+    range,
 } from "../../decorators"
 
 import type {
@@ -36,7 +37,20 @@ export default class extends RenderApp {
         label: "Color"
     })
     private color_: TColorRGBA = [0.65, 0.89, 0.63, 1]
+
+    @range({
+        label: "X offset",
+        min: -0.5,
+        max:  0.5,
+        step: 0.1,
+    })
     private xOffset_ = 0
+    @range({
+        label: "Y offset",
+        min: -0.5,
+        max:  0.5,
+        step: 0.1,
+    })
     private yOffset_ = 0
 
     public constructor(
