@@ -5,6 +5,6 @@ import {
 
 import {
     type IRenderApp,
-} from "./lessons"
+} from "../../lessons"
 
 export const KCurrentRenderApp: InjectionKey<Ref<IRenderApp | null>> = Symbol("currentRenderApp")

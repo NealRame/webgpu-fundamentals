@@ -4,6 +4,7 @@ import {
 } from "vue"
 
 import App from "./components/App.vue"
+import AppInspector from "./components/AppInspector"
 import Icons from "./components/Icons.ts"
 
 import Router from "./router"
@@ -13,6 +14,7 @@ import Router from "./router"
         render: () => h(App),
     })
     app
+        .use(AppInspector)
         .use(Icons)
         .use(Router)
         .mount("#app")

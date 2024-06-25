@@ -20,9 +20,7 @@ import {
 
 import {
     KCurrentRenderApp,
-} from "../keys"
-
-import AppInspector from "./AppInspector"
+} from "./AppInspector"
 
 
 const { id } = defineProps({

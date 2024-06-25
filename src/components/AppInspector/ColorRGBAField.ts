@@ -6,18 +6,21 @@ import {
 } from "vue"
 
 import {
-    KCurrentRenderApp,
-} from "../../keys"
-
-import {
-    TRangeFieldConfig,
+    TColorRGBAFieldConfig,
 } from "../../decorators"
 
+import {
+    KCurrentRenderApp,
+} from "./keys"
 
-import InputRange from "../InputRange.vue"
+import type {
+    TColorRGBA,
+} from "../../types"
 
-export const RangeField = defineComponent<{
-    fieldMeta: TRangeFieldConfig,
+import InputColorRGBA from "../InputColorRGBA.vue"
+
+export default defineComponent<{
+    fieldMeta: TColorRGBAFieldConfig,
 }>(props => {
     const renderAppRef = inject(KCurrentRenderApp)
     const {
@@ -25,9 +28,6 @@ export const RangeField = defineComponent<{
             access,
             label,
             name,
-            max,
-            min,
-            step
     } } = props
     return () => {
         const renderApp = unref(renderAppRef)!;
@@ -36,24 +36,13 @@ export const RangeField = defineComponent<{
                 class: "model-inspector-label",
                 innerHTML: label ?? name,
             }),
-            h(InputRange, {
-                max,
-                min,
-                step,
+            h(InputColorRGBA, {
                 modelValue: access.get(renderApp),
-                "onUpdate:modelValue": (value: number) => {
+                "onUpdate:modelValue": (value: TColorRGBA) => {
                     access.set(renderApp, value)
                     renderApp.render()
                 }
             }),
-            h("label", {
-                class: "model-inspector-value",
-                innerHTML: `${access.get(renderApp)}`,
-                style: {
-                    textAlign: "right"
-                }
-            })
         ]
     }
 }, { props: ["fieldMeta"], })
-
