@@ -3,6 +3,10 @@ import {
     range,
 } from "../../decorators"
 
+import {
+    CatppuccinMocha,
+} from "../../colors"
+
 import type {
     TColorRGBA,
 } from "../../types"
@@ -16,7 +20,7 @@ import shaderSource from "./shader.wgsl?raw"
 const Title = "Triangle shaders with uniforms."
 const Description = "Draw a triangle, color, scale and offset are passed using Uniforms."
 
-const UniformBuffer_Size = 
+const UniformBuffer_Size =
         4*4 //  color is 4 32 bits floats
     +   2*4 // offset is 2 32 bits floats
     +   2*4 //  scale is 2 32 bits floats
@@ -36,7 +40,7 @@ export default class extends RenderApp {
     @colorRGBA({
         label: "Color"
     })
-    private color_: TColorRGBA = [0.65, 0.89, 0.63, 1]
+    private color_: TColorRGBA = CatppuccinMocha.teal
 
     @range({
         label: "X offset",
@@ -58,7 +62,7 @@ export default class extends RenderApp {
         device: GPUDevice,
     ) {
         super(canvas, device)
-        
+
         const module = device.createShaderModule({
             label: Title,
             code: shaderSource
@@ -118,7 +122,7 @@ export default class extends RenderApp {
         const pass = encoder.beginRenderPass({
             label: Title,
             colorAttachments: [{
-                clearValue: [0.3, 0.3, 0.3, 1.0],
+                clearValue: CatppuccinMocha.base,
                 loadOp: "clear",
                 storeOp: "store",
                 view: this.context.getCurrentTexture().createView(),

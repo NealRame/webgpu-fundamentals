@@ -1,4 +1,8 @@
 import {
+    CatppuccinMocha,
+} from "../../colors"
+
+import {
     RenderApp,
 } from "../render"
 
@@ -18,7 +22,7 @@ export default class extends RenderApp {
         device: GPUDevice,
     ) {
         super(canvas, device)
-        
+
         const module = device.createShaderModule({
             label: Title,
             code: shaderSource
@@ -53,7 +57,7 @@ export default class extends RenderApp {
         const pass = encoder.beginRenderPass({
             label: Title,
             colorAttachments: [{
-                clearValue: [0.3, 0.3, 0.3, 1.0],
+                clearValue: CatppuccinMocha.base,
                 loadOp: "clear",
                 storeOp: "store",
                 view: this.context.getCurrentTexture().createView(),
