@@ -26,7 +26,7 @@ const UniformBuffer_ColorOffset = 0
 const UniformBuffer_OffsetOffset = 4
 const UniformBuffer_ScaleOffset = 6
 
-const ObjectCount = 10
+const ObjectCount = 100
 
 type TObjectInfo = {
     scale: number
@@ -74,7 +74,7 @@ export default class extends RenderApp {
         })
 
         this.objectInfos_ = times(i => {
-            const scale = rand()
+            const scale = rand(0.2, 0.5)
             const uniformValues = new Float32Array(UniformBuffer_Size/4)
             const uniformBuffer = device.createBuffer({
                 label: `uniforms for object: ${i}`,
