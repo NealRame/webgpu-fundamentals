@@ -1,4 +1,8 @@
 import {
+    rand,
+} from "./utils"
+
+import {
     type TColorRGBA
 } from "./types"
 
@@ -34,4 +38,16 @@ export const CatppuccinMocha = {
     "base":      rgb( 30,  30,  46),
     "mantle":    rgb( 24,  24,  37),
     "crust":     rgb( 17,  17,  27),
+}
+
+export function randRGB(
+    palette?: Record<string, TColorRGBA>,
+): TColorRGBA {
+    if (palette == null) {
+        return [rand(), rand(), rand(), 1]
+    }
+
+    const colors = Object.values(palette)
+    const index = Math.floor(rand(colors.length))
+    return colors[index]
 }
