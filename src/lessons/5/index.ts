@@ -14,8 +14,8 @@ import {
 
 import shaderSource from "./shader.wgsl?raw"
 
-const Title = "Triangle shaders with uniforms."
-const Description = "Draw a triangle, color, scale and offset are passed using Uniforms."
+const Title = "Multiple triangle shaders with uniforms."
+const Description = "Draw multiple triangles, color, scale and offset are passed using Uniforms."
 
 const UniformBuffer_Size =
         4*4 //  color is 4 32 bits floats
