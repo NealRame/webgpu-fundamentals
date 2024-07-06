@@ -1,6 +1,6 @@
 /**
  * Checks if a value is null or undefined.
- * 
+ *
  * @param value - The value to check.
  * @returns `true` if the value is null or undefined, `false` otherwise.
  */
@@ -40,4 +40,23 @@ export function rand(a?: number, b?: number): number {
         a = 0
     }
     return a + Math.random()*(b - a)
+}
+
+/**
+ * Generates an array containing n elements wich are the result of the
+ * invocation of a given function.
+ *
+ * @param fn - a function.
+ * @param n  - specify how many times the function should be called.
+ * @returns an array of `n` elements
+ */
+export function times<T>(
+    fn: (i: number, n: number) => T,
+    n: number,
+): Array<T> {
+    const a: Array<T> = []
+    for (let i = 0; i < n; ++i) {
+        a[i] = fn(i, n)
+    }
+    return a
 }
