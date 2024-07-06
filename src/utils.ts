@@ -16,3 +16,28 @@ export function isNil<T>(value: T | null | undefined): value is (null | undefine
 export function truthy(v: any) {
     return !!v
 }
+
+/**
+ * Get a random value in a given range.
+ *
+ * If no value are given, the range is [0, 1).
+ * If one value is given, the range is [0, a).
+ * If two values are given, the range is [a, b).
+ *
+ * @param min? - the lower bound of the range.
+ * @param max? - the upper bound of the range.
+ * @returns a random is the specified range.
+ */
+export function rand(): number
+export function rand(max: number): number
+export function rand(min: number, max: number): number
+export function rand(a?: number, b?: number): number {
+    if (a == null) {
+        a = 0
+        b = 1
+    } else if (b == null) {
+        b = a
+        a = 0
+    }
+    return a + Math.random()*(b - a)
+}
