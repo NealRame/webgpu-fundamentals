@@ -65,7 +65,7 @@ export default class extends RenderApp {
 
         const module = device.createShaderModule({
             label: Title,
-            code: shaderSource
+            code: shaderSource,
         })
 
         this.paramsBuffer_ = device.createBuffer({
@@ -89,9 +89,9 @@ export default class extends RenderApp {
                 entryPoint: "fragment_shader",
                 module,
                 targets: [{
-                    format: this.textureFormat
-                }]
-            }
+                    format: this.textureFormat,
+                }],
+            },
         })
     }
 
@@ -126,7 +126,7 @@ export default class extends RenderApp {
                 loadOp: "clear",
                 storeOp: "store",
                 view: this.context.getCurrentTexture().createView(),
-            }]
+            }],
         })
         pass.setPipeline(this.pipeline_)
         pass.setBindGroup(0, bindGroup)
