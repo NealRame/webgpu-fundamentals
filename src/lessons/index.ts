@@ -4,6 +4,7 @@ import Lesson3 from "./3"
 import Lesson4 from "./4"
 import Lesson5 from "./5"
 import Lesson6 from "./6"
+import Lesson7 from "./7"
 
 import { IRenderApp } from "./render"
 
@@ -14,6 +15,7 @@ export const Lessons = {
     "4": Lesson4,
     "5": Lesson5,
     "6": Lesson6,
+    "7": Lesson7,
 }
 
 function isLesson(id: string): id is (keyof typeof Lessons) {
