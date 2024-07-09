@@ -51,6 +51,7 @@ watch(canvas, async canvas => {
         } catch (err) {
             if (err instanceof Error) {
                 error.value = err
+                console.error(err)
             }
         }
     } else {
@@ -92,4 +93,3 @@ watch(size, size => {
     ></canvas>
     <AppInspector/>
 </template>
-
