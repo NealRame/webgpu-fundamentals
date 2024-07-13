@@ -1,13 +1,14 @@
-import Lesson1 from "./1"
-import Lesson2 from "./2"
-import Lesson3 from "./3"
-import Lesson4 from "./4"
-import Lesson5 from "./5"
-import Lesson6 from "./6"
-import Lesson7 from "./7"
-import Lesson8 from "./8"
-import Lesson9 from "./9"
+import Lesson1 from  "./1"
+import Lesson2 from  "./2"
+import Lesson3 from  "./3"
+import Lesson4 from  "./4"
+import Lesson5 from  "./5"
+import Lesson6 from  "./6"
+import Lesson7 from  "./7"
+import Lesson8 from  "./8"
+import Lesson9 from  "./9"
 import Lesson10 from "./10"
+import Lesson11 from "./11"
 
 import { IRenderApp } from "./render"
 
@@ -22,6 +23,7 @@ export const Lessons = {
     "8" : Lesson8,
     "9" : Lesson9,
     "10": Lesson10,
+    "11": Lesson11,
 }
 
 function isLesson(id: string): id is (keyof typeof Lessons) {
