@@ -36,7 +36,7 @@ type TShapeData = {
     vertexCount: number
 }
 
-function createCircleVertices2(
+function createCircleVertices(
     options: Partial<TCircleConfig> = {},
 ): TShapeData {
     const {
@@ -217,7 +217,7 @@ export default class extends RenderApp {
             usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
         })
 
-        const { vertexCount, vertexData } = createCircleVertices2({
+        const { vertexCount, vertexData } = createCircleVertices({
             numSubdivision: 64,
             innerRadius: .75,
         })
