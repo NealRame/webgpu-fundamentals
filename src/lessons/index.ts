@@ -10,8 +10,11 @@ import Lesson9 from  "./9"
 import Lesson10 from "./10"
 import Lesson11 from "./11"
 import Lesson12 from "./12"
+import Lesson13 from "./13"
 
-import { IRenderApp } from "./render"
+import {
+    IRenderApp,
+} from "./render"
 
 export const Lessons = {
     "1" : Lesson1,
@@ -26,6 +29,7 @@ export const Lessons = {
     "10": Lesson10,
     "11": Lesson11,
     "12": Lesson12,
+    "13": Lesson13,
 }
 
 function isLesson(id: string): id is (keyof typeof Lessons) {
