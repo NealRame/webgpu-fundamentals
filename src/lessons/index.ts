@@ -12,6 +12,8 @@ import Lesson11 from "./11"
 import Lesson12 from "./12"
 import Lesson13 from "./13"
 import Lesson14 from "./14"
+import Lesson15 from "./15"
+
 
 import {
     IRenderApp,
@@ -32,6 +34,7 @@ export const Lessons = {
     "12": Lesson12,
     "13": Lesson13,
     "14": Lesson14,
+    "15": Lesson15,
 }
 
 function isLesson(id: string): id is (keyof typeof Lessons) {
