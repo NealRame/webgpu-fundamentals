@@ -7,6 +7,7 @@ import {
     ModelMetadataKey
 } from "./common"
 
+export * from "./choice"
 export * from "./range"
 export * from "./colorRGBA"
 
