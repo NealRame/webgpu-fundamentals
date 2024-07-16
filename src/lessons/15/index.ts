@@ -15,13 +15,13 @@ const TextureWidth = 5
 const TextureHeight = 7
 const TextureData = ((_, y, b) => {
     return new Uint8Array([
-        b, _, _, _, _,
-        _, y, y, y, _,
+        _, _, _, _, _,
+        _, y, _, _, _,
         _, y, _, _, _,
         _, y, y, _, _,
         _, y, _, _, _,
-        _, y, _, _, _,
-        _, _, _, _, _,
+        _, y, y, y, _,
+        b, _, _, _, _,
     ].flat().map(v => v*255))
 })(
     CatppuccinMocha.red,
