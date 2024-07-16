@@ -47,10 +47,10 @@ watch([r, g, b, a], (color) => {
 
 <template>
     <ul class="flex flex-col list-none m-0 p-0">
-        <li class="flex items-center gap-x-1">r<InputRange v-model="r" :step="step"/></li>
-        <li class="flex items-center gap-x-1">g<InputRange v-model="g" :step="step"/></li>
-        <li class="flex items-center gap-x-1">b<InputRange v-model="b" :step="step"/></li>
-        <li class="flex items-center gap-x-1">a<InputRange v-model="a" :step="step"/></li>
+        <li class="flex items-center gap-x-1"><InputRange v-model="r" :step="step"/>r</li>
+        <li class="flex items-center gap-x-1"><InputRange v-model="g" :step="step"/>g</li>
+        <li class="flex items-center gap-x-1"><InputRange v-model="b" :step="step"/>b</li>
+        <li class="flex items-center gap-x-1"><InputRange v-model="a" :step="step"/>a</li>
     </ul>
     <div class="border-2 border-white rounded my-1" :style="cssColor"></div>
 </template>

@@ -33,7 +33,7 @@ export default defineComponent<{
         const renderApp = unref(renderAppRef)!;
         return [
             h("label", {
-                class: "model-inspector-label",
+                class: "after:content-[':'] text-right",
                 innerHTML: label ?? name,
             }),
             h(InputColorRGBA, {

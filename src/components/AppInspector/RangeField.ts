@@ -33,8 +33,8 @@ export default defineComponent<{
         const renderApp = unref(renderAppRef)!;
         return [
             h("label", {
-                class: "model-inspector-label",
-                innerHTML: label ?? name,
+                class: "after:content-[':'] text-right",
+                innerHTML: label ?? name
             }),
             h(InputRange, {
                 max,
@@ -47,7 +47,6 @@ export default defineComponent<{
                 }
             }),
             h("label", {
-                class: "model-inspector-value",
                 innerHTML: `${access.get(renderApp)}`,
                 style: {
                     textAlign: "right"

@@ -8,8 +8,9 @@ import {
 import {
     type TConstructor,
     getModelMetadata,
-    isRangeFieldConfig,
+    isChoiceFieldConfig,
     isColorRGBAFieldConfig,
+    isRangeFieldConfig,
 } from "../../decorators"
 
 import {
@@ -20,6 +21,7 @@ import {
     KCurrentRenderApp,
 } from "./keys"
 
+import ChoiceField from "./ChoiceField"
 import ColorRGBAField from "./ColorRGBAField"
 import RangeField from "./RangeField"
 
@@ -31,13 +33,18 @@ export default defineComponent(() => {
         const meta = getModelMetadata(lesson.constructor as TConstructor)
         const fields = Object.values(meta)
             .map(fieldMeta => {
-                if (isRangeFieldConfig(fieldMeta)) {
-                    return h(RangeField, {
+                if (isChoiceFieldConfig(fieldMeta)) {
+                    return h(ChoiceField, {
                         fieldMeta,
                     })
                 }
                 if (isColorRGBAFieldConfig(fieldMeta)) {
                     return h(ColorRGBAField, {
+                        fieldMeta,
+                    })
+                }
+                if (isRangeFieldConfig(fieldMeta)) {
+                    return h(RangeField, {
                         fieldMeta,
                     })
                 }
