@@ -2,21 +2,21 @@ import {
     ensureMetadata,
 } from "./common"
 
-export type TChoiceFieldOptions<T extends unknown[]> = {
+export type TChoiceFieldOptions<T extends Array<unknown> = Array<unknown>> = {
     label?: string
-    values: [...T]
+    values: readonly [...T]
 }
 
-export type TChoiceFieldConfig<U = any, T extends unknown[] = Array<unknown>> = Required<TChoiceFieldOptions<T>> & {
+export type TChoiceFieldConfig<U = any> = Required<TChoiceFieldOptions> & {
     name: string,
     type: "range",
     access: {
-        get: (obj: U) => T[number],
-        set: (obj: U, value: T[number]) => void,
+        get: (obj: U) => unknown,
+        set: (obj: U, value: unknown) => void,
     }
 }
 
-export function choice<This, T extends unknown[]>(options: TChoiceFieldOptions<T>) {
+export function choice<This, const T extends unknown[]>(options: TChoiceFieldOptions<T>) {
     return function (
         _: undefined,
         context: ClassFieldDecoratorContext<This, [...T][number]>,
