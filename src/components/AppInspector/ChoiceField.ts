@@ -24,6 +24,7 @@ export default defineComponent<{
             name,
             values,
     } } = props
+
     return () => {
         const renderApp = unref(renderAppRef)!;
         return [
@@ -32,12 +33,13 @@ export default defineComponent<{
                 innerHTML: label ?? name,
             }),
             h("select", {
-                class: "bg-inherit border-0 col-span-2 cursor-pointer outline-0",
+                class: "bg-inherit border-2 col-span-2 cursor-pointer outline-0 rounded",
                 modelValue: access.get(renderApp),
-                "onUpdate:modelValue": (value: string) => {
-                    access.set(renderApp, value)
+                "onChange": (ev: InputEvent) => {
+                    const target = ev.target as HTMLSelectElement
+                    access.set(renderApp, target.value)
                     renderApp.render()
-                }
+                },
             }, values.map(innerHTML => h("option", { innerHTML }))),
         ]
     }
