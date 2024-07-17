@@ -33,6 +33,17 @@ const TextureData = ((_, y, b) => {
     CatppuccinMocha.blue,
 )
 
+const TextureSamplerAddressModes = ["repeat", "clamp-to-edge"] as const
+type TTextureSamplerAddressMode = typeof TextureSamplerAddressModes[number]
+function TextureSamplerAddressMode(v: TTextureSamplerAddressMode) {
+    return v
+}
+
+const FilterModes = ["nearest", "linear"] as const
+type TFilterMode = typeof FilterModes[number]
+function FilterMode(v: TFilterMode) {
+    return v
+}
 
 export default class extends RenderApp {
     static title_ = Title
@@ -40,21 +51,21 @@ export default class extends RenderApp {
 
     @choice({
         label: "address mode U",
-        values: ["repeat", "clamp-to-edge"],
+        values: TextureSamplerAddressModes,
     })
-    private addressModeU_ = "repeat"
+    private addressModeU_ = TextureSamplerAddressMode("repeat")
 
     @choice({
         label: "address mode V",
-        values: ["repeat", "clamp-to-edge"],
+        values: TextureSamplerAddressModes,
     })
-    private addressModeV_ = "repeat"
+    private addressModeV_ = TextureSamplerAddressMode("repeat")
 
     @choice({
         label: "mag filter",
-        values: ["nearest", "linear"],
+        values: FilterModes,
     })
-    private magFilter_ = "nearest"
+    private magFilter_ = FilterMode("nearest")
 
     private pipeline_: GPURenderPipeline
     private texture_: GPUTexture
