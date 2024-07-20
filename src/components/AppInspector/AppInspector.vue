@@ -7,6 +7,7 @@ import {
     computed,
     inject,
     ref,
+    unref,
 } from "vue"
 
 import {
@@ -26,34 +27,84 @@ const lessonHasSettings = computed(() => {
 })
 
 const showSettings = ref(false)
+const animationLoop = ref(false)
 
 const inspectorFramesClasses = computed(() => {
     return showSettings.value
         ? "rounded px-2 py-1"
         : "rounded-full"
 })
+
+function toggleAnimationLoop() {
+    if (lesson.value != null) {
+        animationLoop.value = !unref(animationLoop)
+        if (animationLoop.value) {
+            lesson.value.start()
+        } else {
+            lesson.value.stop()
+        }
+    } else {
+        animationLoop.value = false
+    }
+}
+
+function toggleSettings() {
+    if (lesson.value != null) {
+        showSettings.value = !unref(showSettings)
+    } else {
+        showSettings.value = false
+    }
+}
+
+function onUpdated() {
+    if (lesson.value != null && !lesson.value.isRunning) {
+        lesson.value.render()
+    }
+}
+
 </script>
 
 <template>
     <aside
-        v-if="lessonHasSettings"
-        class="absolute bottom-2 left-2 border-2 bg-base bg-opacity-50 flex flex-col gap-1 text-white"
-        :class="inspectorFramesClasses"
+        class="absolute bottom-2 left-2 flex gap-1 items-end text-white"
     >
-        <button
-            v-if="!showSettings"
-            class="block w-8 h-8 p-0 m-0 hover:text-green"
-            @click="showSettings = true"
-        ><IconSettings/></button>
-
         <div
-            v-if="showSettings"
-            class="grid grid-cols-[1fr_auto] border-b"
+            class="border-2 bg-base bg-opacity-50 gap-1 rounded-full"
         >
-            <h1>Settings</h1>
-            <button class="hover:text-green"><IconClose @click="showSettings = false"/></button>
+            <button
+                v-if="animationLoop"
+                class="w-8 h-8 p-0 m-0 hover:text-green"
+                @click="toggleAnimationLoop"
+            ><IconPause/></button>
+            <button
+                v-else
+                class="w-8 h-8 p-0 m-0 hover:text-green"
+                @click="toggleAnimationLoop"
+            ><IconPlay/></button>
         </div>
-
-        <InspectorForm v-if="showSettings"/>
+        <div
+            v-if="lessonHasSettings"
+            class="bg-base bg-opacity-50 border-2 "
+            :class="inspectorFramesClasses"
+        >
+            <div
+                v-if="showSettings"
+                class="flex flex-col gap-1"
+            >
+                <div class="border-b grid grid-cols-[1fr_auto]">
+                    <h1>Settings</h1>
+                    <button
+                        class="hover:text-green"
+                        @click="toggleSettings"
+                    ><IconClose/></button>
+                </div>
+                <InspectorForm @updated="onUpdated"/>
+            </div>
+            <button
+                v-else
+                class="block w-8 h-8 p-0 m-0 hover:text-green"
+                @click="toggleSettings"
+            ><IconSettings/></button>
+        </div>
     </aside>
 </template>

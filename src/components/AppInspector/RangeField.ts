@@ -18,7 +18,9 @@ import InputRange from "../InputRange.vue"
 
 export default defineComponent<{
     fieldMeta: TRangeFieldConfig,
-}>(props => {
+}, {
+    updated(name: string): void
+}>((props, { emit }) => {
     const renderAppRef = inject(KCurrentRenderApp)
     const {
         fieldMeta: {
@@ -43,6 +45,7 @@ export default defineComponent<{
                 modelValue: access.get(renderApp),
                 "onUpdate:modelValue": (value: number) => {
                     access.set(renderApp, value)
+                    emit("updated", name)
                     renderApp.render()
                 }
             }),
@@ -54,4 +57,4 @@ export default defineComponent<{
             })
         ]
     }
-}, { props: ["fieldMeta"], })
+}, { props: ["fieldMeta"], emits: ["updated"] })

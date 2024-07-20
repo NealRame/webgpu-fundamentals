@@ -15,7 +15,9 @@ import {
 
 export default defineComponent<{
     fieldMeta: TChoiceFieldConfig,
-}>(props => {
+}, {
+    updated(name: string): void
+}>((props, { emit }) => {
     const renderAppRef = inject(KCurrentRenderApp)
     const {
         fieldMeta: {
@@ -38,9 +40,10 @@ export default defineComponent<{
                 "onChange": (ev: InputEvent) => {
                     const target = ev.target as HTMLSelectElement
                     access.set(renderApp, target.value)
+                    emit("updated", name)
                     renderApp.render()
                 },
             }, values.map(innerHTML => h("option", { innerHTML }))),
         ]
     }
-}, { props: ["fieldMeta"], })
+}, { props: ["fieldMeta"], emits: ["updated"] })

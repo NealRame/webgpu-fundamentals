@@ -19,9 +19,12 @@ import type {
 
 import InputColorRGBA from "../InputColorRGBA.vue"
 
+
 export default defineComponent<{
     fieldMeta: TColorRGBAFieldConfig,
-}>(props => {
+}, {
+    updated(name: string): void
+}>((props, { emit }) => {
     const renderAppRef = inject(KCurrentRenderApp)
     const {
         fieldMeta: {
@@ -29,8 +32,10 @@ export default defineComponent<{
             label,
             name,
     } } = props
+
     return () => {
         const renderApp = unref(renderAppRef)!;
+
         return [
             h("label", {
                 class: "after:content-[':'] text-right",
@@ -40,9 +45,9 @@ export default defineComponent<{
                 modelValue: access.get(renderApp),
                 "onUpdate:modelValue": (value: TColorRGBA) => {
                     access.set(renderApp, value)
-                    renderApp.render()
+                    emit("updated", name)
                 }
             }),
         ]
     }
-}, { props: ["fieldMeta"], })
+}, { props: ["fieldMeta"], emits: ["updated"] })

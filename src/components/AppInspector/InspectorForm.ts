@@ -26,8 +26,11 @@ import ColorRGBAField from "./ColorRGBAField"
 import RangeField from "./RangeField"
 
 
-export default defineComponent(() => {
+export default defineComponent<{}, {
+    updated(name: string): void,
+}>((_, { emit }) => {
     const lesson = unref(inject(KCurrentRenderApp))!
+    const onUpdated = (name: string) => emit("updated", name)
 
     return () => {
         const meta = getModelMetadata(lesson.constructor as TConstructor)
@@ -36,16 +39,19 @@ export default defineComponent(() => {
                 if (isChoiceFieldConfig(fieldMeta)) {
                     return h(ChoiceField, {
                         fieldMeta,
+                        onUpdated,
                     })
                 }
                 if (isColorRGBAFieldConfig(fieldMeta)) {
                     return h(ColorRGBAField, {
                         fieldMeta,
+                        onUpdated,
                     })
                 }
                 if (isRangeFieldConfig(fieldMeta)) {
                     return h(RangeField, {
                         fieldMeta,
+                        onUpdated,
                     })
                 }
                 return null
@@ -63,4 +69,4 @@ export default defineComponent(() => {
             ],
         }, fields)]
     }
-})
+}, { emits: ["updated"], })
