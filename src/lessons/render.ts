@@ -3,7 +3,13 @@ export interface IRenderApp {
     readonly device: GPUDevice
     readonly context: GPUCanvasContext
     readonly textureFormat: GPUTextureFormat
+    readonly isRunning: boolean
+
+    start: () => void
+    stop: () => void
+
     render: () => void
+    update: () => void
 }
 
 export class RenderApp implements IRenderApp {
@@ -14,6 +20,17 @@ export class RenderApp implements IRenderApp {
     private context_: GPUCanvasContext
     private device_: GPUDevice
     private textureFormat_: GPUTextureFormat
+
+    private animationRequestID_: number | null = null
+    private running_ = false
+
+    private animationCallback_ = () => {
+        if (this.running_) {
+            this.update()
+            this.render()
+            this.animationRequestID_ = window.requestAnimationFrame(this.animationCallback_)
+        }
+    }
 
     static get title() {
         return this.title_
@@ -61,6 +78,10 @@ export class RenderApp implements IRenderApp {
         this.context_ = context
     }
 
+    get isRunning() {
+        return this.running_
+    }
+
     public get canvas() {
         return this.canvas_
     }
@@ -75,6 +96,23 @@ export class RenderApp implements IRenderApp {
 
     public get textureFormat() {
         return this.textureFormat_
+    }
+
+    public start() {
+        if (!this.running_) {
+            this.running_ = true
+            this.animationRequestID_ = window.requestAnimationFrame(this.animationCallback_)
+        }
+    }
+
+    public stop() {
+        if (this.running_) {
+            this.running_ = false
+            window.cancelAnimationFrame(this.animationRequestID_!)
+        }
+    }
+
+    public update() {
     }
 
     public render() {

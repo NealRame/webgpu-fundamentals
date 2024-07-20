@@ -72,14 +72,15 @@ watch(size, size => {
                 lesson.value.device.limits.maxTextureDimension2D,
                 height,
             ))
-            lesson.value.render()
+            if (!lesson.value.isRunning) {
+                lesson.value.render()
+            }
         } else {
             canvas.value.width = width
             canvas.value.height = height
         }
     }
 })
-
 </script>
 
 <template>
