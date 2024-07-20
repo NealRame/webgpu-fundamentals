@@ -16,6 +16,12 @@ const Close = defineComponent({
     })
 })
 
+const Pause = defineComponent({
+    setup: () => () => h("i", {
+        class: "fa-solid fa-pause",
+    })
+})
+
 const Settings = defineComponent({
     setup: () => () => h("i", {
         class: "fa-solid fa-gear",
@@ -28,6 +34,7 @@ const IconsPlugin = {
         application
             .component("IconAngleRight", AngleRight)
             .component("IconClose", Close)
+            .component("IconPause", Pause)
             .component("IconSettings", Settings)
     }
 }
