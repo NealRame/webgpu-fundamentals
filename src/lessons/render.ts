@@ -1,3 +1,7 @@
+import type {
+    TSize,
+} from "../types"
+
 export interface IRenderApp {
     readonly canvas: HTMLCanvasElement
     readonly device: GPUDevice
@@ -10,6 +14,8 @@ export interface IRenderApp {
 
     render: () => void
     update: () => void
+
+    resize: (size: TSize) => TSize
 }
 
 export class RenderApp implements IRenderApp {
@@ -117,6 +123,10 @@ export class RenderApp implements IRenderApp {
 
     public render() {
         this.device_.queue.submit(this.render_())
+    }
+
+    public resize(size: TSize) {
+        return size
     }
 
     protected render_(): Array<GPUCommandBuffer> {
