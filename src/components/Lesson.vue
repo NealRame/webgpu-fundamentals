@@ -39,7 +39,7 @@ const lesson = ref<IRenderApp | null>(null)
 //    width: 100%;
 //    height: 100%;
 // }
-const { size } = useResize(canvas, window.devicePixelRatio)
+const { devicePixelSize: size } = useResize(canvas)
 
 provide(KCurrentRenderApp, lesson)
 
@@ -61,9 +61,9 @@ watch(canvas, async canvas => {
 
 watch(size, size => {
     if (canvas.value) {
-        const { width, height } = size
-
         if (lesson.value) {
+            const { width, height } = lesson.value.resize(size)
+
             canvas.value.width = Math.max(1, Math.min(
                 lesson.value.device.limits.maxTextureDimension2D,
                 width,
@@ -76,8 +76,8 @@ watch(size, size => {
                 lesson.value.render()
             }
         } else {
-            canvas.value.width = width
-            canvas.value.height = height
+            canvas.value.width = size.width
+            canvas.value.height = size.height
         }
     }
 })
@@ -90,6 +90,7 @@ watch(size, size => {
     >{{ error.message }}</div>
     <canvas
         class="block w-full h-full"
+        style="image-rendering: pixelated; image-rendering: crisp-edges;"
         ref="canvas"
     ></canvas>
     <AppInspector/>

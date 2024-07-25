@@ -1,28 +1,40 @@
 import {
     type Ref,
-    computed,
     onMounted,
     onUnmounted,
     ref,
     watch,
 } from "vue"
 
+import type {
+    TSize,
+} from "../types"
 
-export function useResize(el: Ref<HTMLElement | null>, scale: number = 1) {
-    const width = ref(0)
-    const height = ref(0)
-    const size = computed(() => ({
-        width: width.value,
-        height: height.value,
-    }))
+
+const SizeDefault: TSize = {
+    width: 0,
+    height: 0,
+}
+
+export function useResize(el: Ref<HTMLElement | null>) {
+    const devicePixelSize = ref<TSize>({...SizeDefault})
+    const size = ref<TSize>({...SizeDefault})
 
     const observer = new ResizeObserver(entries => {
         for (const entry of entries) {
             if (entry.target !== el.value) {
                 continue
             }
-            width.value = scale*entry.contentRect.width
-            height.value = scale*entry.contentRect.height
+
+            size.value = {
+                width: entry.contentBoxSize[0]?.inlineSize ?? 0,
+                height: entry.contentBoxSize[0]?.blockSize ?? 0,
+            }
+
+            devicePixelSize.value = {
+                width: entry.devicePixelContentBoxSize[0]?.inlineSize ?? 0,
+                height: entry.devicePixelContentBoxSize[0]?.blockSize ?? 0,
+            }
         }
     })
 
@@ -48,8 +60,7 @@ export function useResize(el: Ref<HTMLElement | null>, scale: number = 1) {
     })
 
     return {
-        width,
-        height,
         size,
+        devicePixelSize,
     }
 }
