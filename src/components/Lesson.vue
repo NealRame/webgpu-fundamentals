@@ -19,6 +19,10 @@ import {
 } from "../lessons"
 
 import {
+    type TSize,
+} from "../types"
+
+import {
     KCurrentRenderApp,
 } from "./AppInspector"
 
@@ -43,6 +47,29 @@ const { devicePixelSize: size } = useResize(canvas)
 
 provide(KCurrentRenderApp, lesson)
 
+function resize([size, lesson]: [TSize, IRenderApp | null]) {
+    if (canvas.value) {
+        if (lesson) {
+            const { width, height } = lesson.resize(size)
+
+            canvas.value.width = Math.max(1, Math.min(
+                lesson.device.limits.maxTextureDimension2D,
+                width,
+            ))
+            canvas.value.height = Math.max(1, Math.min(
+                lesson.device.limits.maxTextureDimension2D,
+                height,
+            ))
+            if (!lesson.isRunning) {
+                lesson.render()
+            }
+        } else {
+            canvas.value.width = size.width
+            canvas.value.height = size.height
+        }
+    }
+}
+
 watch(canvas, async canvas => {
     if (canvas) {
         try {
@@ -59,28 +86,7 @@ watch(canvas, async canvas => {
     }
 })
 
-watch(size, size => {
-    if (canvas.value) {
-        if (lesson.value) {
-            const { width, height } = lesson.value.resize(size)
-
-            canvas.value.width = Math.max(1, Math.min(
-                lesson.value.device.limits.maxTextureDimension2D,
-                width,
-            ))
-            canvas.value.height = Math.max(1, Math.min(
-                lesson.value.device.limits.maxTextureDimension2D,
-                height,
-            ))
-            if (!lesson.value.isRunning) {
-                lesson.value.render()
-            }
-        } else {
-            canvas.value.width = size.width
-            canvas.value.height = size.height
-        }
-    }
-})
+watch([size, lesson], resize)
 </script>
 
 <template>
