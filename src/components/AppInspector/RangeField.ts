@@ -19,7 +19,7 @@ import InputRange from "../InputRange.vue"
 export default defineComponent<{
     fieldMeta: TRangeFieldConfig,
 }, {
-    updated(name: string): void
+    changed(name: string): void
 }>((props, { emit }) => {
     const renderAppRef = inject(KCurrentRenderApp)
     const {
@@ -31,8 +31,10 @@ export default defineComponent<{
             min,
             step
     } } = props
+
     return () => {
         const renderApp = unref(renderAppRef)!;
+
         return [
             h("label", {
                 class: "after:content-[':'] text-right",
@@ -45,7 +47,7 @@ export default defineComponent<{
                 modelValue: access.get(renderApp),
                 "onUpdate:modelValue": (value: number) => {
                     access.set(renderApp, value)
-                    emit("updated", name)
+                    emit("changed", name)
                     renderApp.render()
                 }
             }),
@@ -57,4 +59,4 @@ export default defineComponent<{
             })
         ]
     }
-}, { props: ["fieldMeta"], emits: ["updated"] })
+}, { props: ["fieldMeta"], emits: ["changed"] })

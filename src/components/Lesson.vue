@@ -70,6 +70,10 @@ function resize([size, lesson]: [TSize, IRenderApp | null]) {
     }
 }
 
+function onChanged() {
+    resize([size.value, lesson.value])
+}
+
 watch(canvas, async canvas => {
     if (canvas) {
         try {
@@ -96,8 +100,7 @@ watch([size, lesson], resize)
     >{{ error.message }}</div>
     <canvas
         class="block w-full h-full"
-        style="image-rendering: pixelated; image-rendering: crisp-edges;"
         ref="canvas"
     ></canvas>
-    <AppInspector/>
+    <AppInspector @changed="onChanged"/>
 </template>

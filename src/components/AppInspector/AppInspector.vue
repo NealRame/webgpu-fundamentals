@@ -21,6 +21,8 @@ import {
 import InspectorForm from "./InspectorForm"
 
 
+const emit = defineEmits(["changed"])
+
 const lesson = inject(KCurrentRenderApp) ?? ref(null)
 const lessonHasSettings = computed(() => {
     return hasModelMetadata(lesson.value?.constructor)
@@ -53,12 +55,6 @@ function toggleSettings() {
         showSettings.value = !unref(showSettings)
     } else {
         showSettings.value = false
-    }
-}
-
-function onUpdated() {
-    if (lesson.value != null && !lesson.value.isRunning) {
-        lesson.value.render()
     }
 }
 
@@ -98,7 +94,7 @@ function onUpdated() {
                         @click="toggleSettings"
                     ><IconClose/></button>
                 </div>
-                <InspectorForm @updated="onUpdated"/>
+                <InspectorForm @changed="$emit('changed')"/>
             </div>
             <button
                 v-else

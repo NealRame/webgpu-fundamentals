@@ -16,7 +16,7 @@ import {
 export default defineComponent<{
     fieldMeta: TChoiceFieldConfig,
 }, {
-    updated(name: string): void
+    changed(name: string): void
 }>((props, { emit }) => {
     const renderAppRef = inject(KCurrentRenderApp)
     const {
@@ -29,6 +29,7 @@ export default defineComponent<{
 
     return () => {
         const renderApp = unref(renderAppRef)!;
+
         return [
             h("label", {
                 class: "after:content-[':'] text-right",
@@ -40,10 +41,10 @@ export default defineComponent<{
                 "onChange": (ev: InputEvent) => {
                     const target = ev.target as HTMLSelectElement
                     access.set(renderApp, target.value)
-                    emit("updated", name)
+                    emit("changed", name)
                     renderApp.render()
                 },
             }, values.map(innerHTML => h("option", { innerHTML }))),
         ]
     }
-}, { props: ["fieldMeta"], emits: ["updated"] })
+}, { props: ["fieldMeta"], emits: ["changed"] })
