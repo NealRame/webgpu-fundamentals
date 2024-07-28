@@ -5,6 +5,7 @@ import {
 } from "vue-router"
 
 import Home from "./components/Home.vue"
+import Chapter from "./components/Chapter.vue"
 import Lesson from "./components/Lesson.vue"
 
 const routes: Array<RouteRecordRaw> = [{
@@ -12,7 +13,12 @@ const routes: Array<RouteRecordRaw> = [{
     name: "home",
     component: Home,
 }, {
-    path: "/lesson/:id",
+    path: "/:chapterIndex",
+    name: "chapter",
+    component: Chapter,
+    props: true,
+}, {
+    path: "/:chapterIndex/:lessonIndex",
     name: "lesson",
     component: Lesson,
     props: true,

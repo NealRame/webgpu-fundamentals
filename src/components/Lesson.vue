@@ -14,9 +14,12 @@ import {
 } from "../composables"
 
 import {
-    type IRenderApp,
     createLesson,
 } from "../lessons"
+
+import {
+    type IRenderApp,
+} from "../renderapp"
 
 import {
     type TSize,
@@ -27,12 +30,10 @@ import {
 } from "./AppInspector"
 
 
-const { id } = defineProps({
-    id: {
-        type: String,
-        required: true,
-    }
-})
+const { chapterIndex, lessonIndex } = defineProps<{
+    chapterIndex: string,
+    lessonIndex: string,
+}>()
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 const error  = ref<Error | null>(null)
@@ -77,7 +78,7 @@ function onChanged() {
 watch(canvas, async canvas => {
     if (canvas) {
         try {
-            lesson.value = await createLesson(id, canvas)
+            lesson.value = await createLesson(chapterIndex, lessonIndex, canvas)
             lesson.value?.render()
         } catch (err) {
             if (err instanceof Error) {

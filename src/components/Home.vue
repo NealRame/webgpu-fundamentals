@@ -4,32 +4,43 @@ export default { name: "Home" }
 
 <script setup lang="ts">
 import {
-    Lessons,
+    Chapters,
 } from "../lessons"
 
 const linkStyle = ["text-blue", "hover:text-green"]
-const listStyle = [
-    "absolute",
-    "left-1/2",
-    "top-1/2",
-    "translate-x-[-50%]",
-    "translate-y-[-50%]",
-]
+const listStyle = ["list-decimal", "text-green"]
 </script>
 
 <template>
-    <ul :class="listStyle">
-        <li v-for="(_, id) in Lessons">
-            <RouterLink
-                :class="linkStyle"
-                :to="{
-                    name: 'lesson',
-                    params: {
-                        id,
-                    },
-                }"
-            >Lesson #{{ id }}</RouterLink>
-        </li>
-    </ul>
+    <div class="absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]">
+        <ol :class="listStyle" class="flex flex-col gap-4">
+            <li v-for="(chapter, chapterIndex) in Chapters">
+                <header class="text-xl">
+                    <RouterLink
+                        :class="linkStyle"
+                        :to="{
+                            name: 'chapter',
+                            params: {
+                                chapterIndex,
+                            },
+                        }"
+                    >{{ chapter.name }}</RouterLink>
+                </header>
+                <ol :class="listStyle" class="px-8">
+                    <li v-for="(Lesson, lessonIndex) in chapter.lessons">
+                        <RouterLink
+                            :class="linkStyle"
+                            :to="{
+                                name: 'lesson',
+                                params: {
+                                    chapterIndex,
+                                    lessonIndex,
+                                },
+                            }"
+                        >{{ Lesson.title }}</RouterLink>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </div>
 </template>
-

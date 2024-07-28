@@ -1,6 +1,6 @@
 import type {
     TSize,
-} from "../types"
+} from "./types"
 
 export interface IRenderApp {
     readonly canvas: HTMLCanvasElement

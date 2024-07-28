@@ -1,15 +1,16 @@
 import {
     CatppuccinMocha,
-} from "../../colors"
+} from "../../../../colors"
 
 import {
     RenderApp,
-} from "../render"
+} from "../../../../renderapp"
 
 import shaderSource from "./shader.wgsl?raw"
 
-const Title = "Hardcoded RGB triangle shaders."
-const Description = "Draw a RGB triangle."
+
+const Title = "Hardcoded red triangle shaders."
+const Description = "Draw a red triangle."
 
 export default class extends RenderApp {
     static title_ = Title
@@ -24,12 +25,12 @@ export default class extends RenderApp {
         super(canvas, device)
 
         const module = device.createShaderModule({
-            label: Title,
-            code: shaderSource
+            label: `${Title} - shader`,
+            code: shaderSource,
         })
 
         this.pipeline_ = device.createRenderPipeline({
-            label: Title,
+            label: `${Title} - pipeline`,
             layout: "auto",
             vertex: {
                 // entryPoint can be omitted if there is only one vertex_shader
@@ -38,31 +39,30 @@ export default class extends RenderApp {
                 module,
             },
             fragment: {
-                // entryPoint can be omitted if there is only one vertex_shader
+                // entryPoint can be omitted if there is only one fragment_shader
                 // function in the module.
                 entryPoint: "fragment_shader",
                 module,
-                targets: [{
-                    format: this.textureFormat
-                }]
+                targets: [{ format: this.textureFormat }]
             }
         })
     }
 
-    protected render_(): GPUCommandBuffer[] {
+    protected render_(): Array<GPUCommandBuffer> {
         const encoder = this.device.createCommandEncoder({
-            label: Title,
+            label: `${Title} - command encoder`,
         })
 
         const pass = encoder.beginRenderPass({
-            label: Title,
+            label: `${Title} - render pass`,
             colorAttachments: [{
+                view: this.context.getCurrentTexture().createView(),
                 clearValue: CatppuccinMocha.base,
                 loadOp: "clear",
                 storeOp: "store",
-                view: this.context.getCurrentTexture().createView(),
-            }]
+            }],
         })
+
         pass.setPipeline(this.pipeline_)
         pass.draw(3)
         pass.end()
