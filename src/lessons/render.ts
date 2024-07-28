@@ -13,7 +13,7 @@ export interface IRenderApp {
     stop: () => void
 
     render: () => void
-    update: () => void
+    update: (time: number) => void
 
     resize: (size: TSize) => TSize
 }
@@ -30,9 +30,9 @@ export class RenderApp implements IRenderApp {
     private animationRequestID_: number | null = null
     private running_ = false
 
-    private animationCallback_ = () => {
+    private animationCallback_ = (time: number) => {
         if (this.running_) {
-            this.update()
+            this.update(time)
             this.render()
             this.animationRequestID_ = window.requestAnimationFrame(this.animationCallback_)
         }
@@ -118,7 +118,7 @@ export class RenderApp implements IRenderApp {
         }
     }
 
-    public update() {
+    public update(_: number) {
     }
 
     public render() {
