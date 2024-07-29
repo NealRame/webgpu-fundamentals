@@ -22,3 +22,26 @@ canvas {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
 }
+
+.chapter-list {
+    counter-reset: chapter;
+}
+
+.chapter-list > li::before {
+    counter-increment: chapter;
+    content: counter(chapter);
+    @apply text-xl;
+}
+
+.lesson-list {
+    counter-reset: lesson;
+}
+
+.lesson-list > li::before {
+    counter-increment: lesson;
+    content: counter(chapter) "." counter(lesson);
+}
+
+.chapter-list > li::before, .lesson-list > li::before {
+    @apply text-green pr-3;
+}

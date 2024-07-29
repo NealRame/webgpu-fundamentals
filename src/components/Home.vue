@@ -7,15 +7,22 @@ import {
     Chapters,
 } from "../lessons"
 
+const menuStyle = [
+    "absolute",
+    "left-1/2",
+    "top-1/2",
+    "translate-x-[-50%]",
+    "translate-y-[-50%]",
+]
 const linkStyle = ["text-blue", "hover:text-green"]
-const listStyle = ["list-decimal", "text-green"]
 </script>
 
 <template>
-    <div class="absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]">
-        <ol :class="listStyle" class="flex flex-col gap-4">
+    <div :class="menuStyle">
+        <h1 class="border-b border-green mb-4 pb-2 text-center text-green text-4xl">Lessons</h1>
+        <ol class="chapter-list flex flex-col gap-4">
             <li v-for="(chapter, chapterIndex) in Chapters">
-                <header class="text-xl">
+                <span class="text-lg">
                     <RouterLink
                         :class="linkStyle"
                         :to="{
@@ -25,8 +32,8 @@ const listStyle = ["list-decimal", "text-green"]
                             },
                         }"
                     >{{ chapter.name }}</RouterLink>
-                </header>
-                <ol :class="listStyle" class="px-8">
+                </span>
+                <ol class="lesson-list px-8">
                     <li v-for="(Lesson, lessonIndex) in chapter.lessons">
                         <RouterLink
                             :class="linkStyle"
