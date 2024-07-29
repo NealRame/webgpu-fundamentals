@@ -26,7 +26,7 @@ fn vertex_shader(
 
 @fragment
 fn fragment_shader(
-    fs_input: VertexShaderOutput,
+    @location(0) color: vec4f,
 ) -> @location(0) vec4f {
-    return fs_input.color;
+    return color;
 }
