@@ -23,25 +23,27 @@ canvas {
     image-rendering: crisp-edges;
 }
 
+.chapter-list > li,
+.lesson-list > li {
+    @apply flex gap-1 text-green;
+}
+
 .chapter-list {
     counter-reset: chapter;
 }
-
 .chapter-list > li::before {
+    display: inline-block;
     counter-increment: chapter;
     content: counter(chapter);
-    @apply text-xl;
+    @apply text-xl w-6;
 }
 
 .lesson-list {
     counter-reset: lesson;
 }
-
 .lesson-list > li::before {
+    display: inline-block;
     counter-increment: lesson;
     content: counter(chapter) "." counter(lesson);
-}
-
-.chapter-list > li::before, .lesson-list > li::before {
-    @apply text-green pr-3;
+    @apply w-12;
 }
