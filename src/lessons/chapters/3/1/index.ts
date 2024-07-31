@@ -20,7 +20,7 @@ const ParamsOffsets = {
   offset: 24,
 }
 
-const Title = "Triangle shaders with uniforms."
+const Title = "Triangle shaders with uniforms #1."
 const Description = "Pass data to a shader with uniforms."
 
 export default class extends RenderApp {
