@@ -20,10 +20,10 @@ const linkStyle = ["text-blue", "hover:text-green"]
 <template>
     <div :class="menuStyle">
         <h1 class="border-b border-green mb-4 pb-2 text-center text-green text-4xl">Lessons</h1>
-        <ol class="chapter-list flex flex-col gap-4">
+        <ol class="chapter-list flex flex-col gap-4 text-lg">
             <li v-for="(chapter, chapterIndex) in Chapters">
                 <div>
-                    <span class="text-lg">
+                    <span>
                         <RouterLink
                             :class="linkStyle"
                             :to="{
@@ -34,7 +34,7 @@ const linkStyle = ["text-blue", "hover:text-green"]
                             }"
                         >{{ chapter.name }}</RouterLink>
                     </span>
-                    <ol class="lesson-list">
+                    <ol class="lesson-list text-sm">
                         <li v-for="(Lesson, lessonIndex) in chapter.lessons">
                             <RouterLink
                                 :class="linkStyle"

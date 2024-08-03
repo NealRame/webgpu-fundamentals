@@ -35,7 +35,7 @@ canvas {
     display: inline-block;
     counter-increment: chapter;
     content: counter(chapter);
-    @apply text-xl w-6;
+    @apply text-xl w-8;
 }
 
 .lesson-list {
@@ -45,5 +45,5 @@ canvas {
     display: inline-block;
     counter-increment: lesson;
     content: counter(chapter) "." counter(lesson);
-    @apply w-12;
+    @apply w-8;
 }
