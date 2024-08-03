@@ -135,7 +135,7 @@ export default class extends RenderApp {
 
             params2ValuesView.set(
                 [scale/aspect, scale],
-                (offset + TriangleParams2Offsets.scale)/4
+                (offset + TriangleParams2Offsets.scale)/4,
             )
         })
         this.device.queue.writeBuffer(this.params2Buffer_, 0, params2Values)
