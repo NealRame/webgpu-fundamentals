@@ -14,7 +14,7 @@ import {
 import shaderSource from "./shader.wgsl?raw"
 
 
-type TTrianleData = {
+type TTriangleData = {
     bindGroup: GPUBindGroup
     paramsBuffer: GPUBuffer
     paramsValues: ArrayBuffer
@@ -39,7 +39,7 @@ export default class extends RenderApp {
 
     private pipeline_: GPURenderPipeline
 
-    private trianglesData_: Array<TTrianleData>
+    private trianglesData_: Array<TTriangleData>
 
 
     public constructor(
@@ -104,7 +104,7 @@ export default class extends RenderApp {
                 paramsBuffer,
                 paramsValues,
                 bindGroup,
-            } as TTrianleData
+            } as TTriangleData
         }, TriangleCount)
     }
 
