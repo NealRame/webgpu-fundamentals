@@ -81,7 +81,7 @@ const ShapeParams2Offsets = {
     scale: 0,
 }
 
-const Title = "Instancing with Vertex Buffer."
+const Title = "Instancing with Vertex Buffer #1."
 const Description = "Attributes can advance per vertex as well as per instance."
 
 export default class extends RenderApp {

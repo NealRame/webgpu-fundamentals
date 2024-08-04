@@ -98,7 +98,7 @@ function createCircleVertices(options: TCircleOptions = {}) {
 }
 
 
-const Title = "Instancing with Vertex Buffer."
+const Title = "Instancing with Vertex Buffer #2."
 const Description = "Attributes can advance per vertex as well as per instance."
 
 export default class extends RenderApp {
