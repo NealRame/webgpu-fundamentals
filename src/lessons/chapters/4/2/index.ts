@@ -27,8 +27,8 @@ const TriangleParams2Offsets = {
     scale: 0,
 }
 
-const Title = "100 triangles shaders with one draw call."
-const Description = "Draw several triangles with the same shader. Pass data to the shader using storage buffers."
+const Title = "Instancing with storage buffers."
+const Description = "Draw all triangles in a single draw call."
 
 export default class extends RenderApp {
     static title_ = Title

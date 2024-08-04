@@ -33,7 +33,7 @@ const TriangleParams2Offsets = {
     scale: 0,
 }
 
-const Title = "Triangle shaders with storage buffers #1."
+const Title = "Passing data with storage buffer."
 const Description = "Draw several triangles with the same shader. Pass data to the shader using storage buffers."
 
 export default class extends RenderApp {
