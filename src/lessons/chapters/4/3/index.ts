@@ -68,16 +68,16 @@ function createCircleVertices(options: TCircleOptions = {}) {
     return { vertexCount, vertexValues }
 }
 
-const TriangleCount = 4
+const ShapeCount = 4
 
-const TriangleParams1Size = 32
-const TriangleParams1Offsets = {
+const ShapeParams1Size = 32
+const ShapeParams1Offsets = {
     color: 0,
     offset: 16,
 }
 
-const TriangleParams2Size = 8
-const TriangleParams2Offsets = {
+const ShapeParams2Size = 8
+const ShapeParams2Offsets = {
     scale: 0,
 }
 
@@ -125,7 +125,7 @@ export default class extends RenderApp {
             }
         })
 
-        const params1Values = new ArrayBuffer(TriangleParams1Size*TriangleCount)
+        const params1Values = new ArrayBuffer(ShapeParams1Size*ShapeCount)
         const params1ValuesView = new Float32Array(params1Values)
         const params1Buffer = device.createBuffer({
             label: "params1 storage buffer",
@@ -133,16 +133,16 @@ export default class extends RenderApp {
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
         })
 
-        for (let i = 0; i < TriangleCount; ++i) {
-            const offset = i*TriangleParams1Size
+        for (let i = 0; i < ShapeCount; ++i) {
+            const offset = i*ShapeParams1Size
 
             params1ValuesView.set(
                 [rand(), rand(), rand(), 1],
-                (offset + TriangleParams1Offsets.color)/4,
+                (offset + ShapeParams1Offsets.color)/4,
             )
             params1ValuesView.set(
                 [rand(-.9, .9), rand(-.9, .9)],
-                (offset + TriangleParams1Offsets.offset)/4,
+                (offset + ShapeParams1Offsets.offset)/4,
             )
         }
         device.queue.writeBuffer(params1Buffer, 0, params1Values)
@@ -162,10 +162,10 @@ export default class extends RenderApp {
 
         this.params2Buffer_ = device.createBuffer({
             label: "params2 storage buffer",
-            size: TriangleParams2Size*TriangleCount,
+            size: ShapeParams2Size*ShapeCount,
             usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
         })
-        this.scaleFactors_ = times(() => rand(.2, .5), TriangleCount)
+        this.scaleFactors_ = times(() => rand(.2, .5), ShapeCount)
 
         this.bindGroup_ = device.createBindGroup({
             label: `bind group`,
@@ -198,22 +198,22 @@ export default class extends RenderApp {
             }],
         })
 
-        const params2Values = new ArrayBuffer(TriangleParams2Size*TriangleCount)
+        const params2Values = new ArrayBuffer(ShapeParams2Size*ShapeCount)
         const params2ValuesView = new Float32Array(params2Values)
 
         this.scaleFactors_.forEach((scale, i) => {
-            const offset = i*TriangleParams2Size
+            const offset = i*ShapeParams2Size
 
             params2ValuesView.set(
                 [scale/aspect, scale],
-                (offset + TriangleParams2Offsets.scale)/4,
+                (offset + ShapeParams2Offsets.scale)/4,
             )
         })
         this.device.queue.writeBuffer(this.params2Buffer_, 0, params2Values)
 
         pass.setPipeline(this.pipeline_)
         pass.setBindGroup(0, this.bindGroup_)
-        pass.draw(this.vertexCount_, TriangleCount)
+        pass.draw(this.vertexCount_, ShapeCount)
         pass.end()
 
         return [encoder.finish()]
