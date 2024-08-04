@@ -3,7 +3,7 @@ struct VsInput {
     @location(1) instance_color: vec4f,
     @location(2) instance_offset: vec2f,
     @location(3) instance_scale: vec2f,
-    @location(4) vertex_color: vec3f,
+    @location(4) vertex_color: vec4f, // attributes in WSGL does not have to match attributes in JS
 };
 
 struct VsOutput {
@@ -22,7 +22,7 @@ fn vertex_shader(
     let instance_offset = vertex.instance_offset;
     let instance_scale = vertex.instance_scale;
 
-    let color = instance_color*vec4f(vertex_color, 1);
+    let color = instance_color*vertex_color;
 
     return VsOutput(
         vec4f(instance_offset + vertex_position*instance_scale, 0.0, 1.0),
