@@ -96,7 +96,7 @@ function createCircleVertices(options: TCircleOptions = {}) {
 }
 
 
-const Title = "Using normalized values to save space."
+const Title = "Normalized values."
 const Description = "Using normalized values to save space."
 
 export default class extends RenderApp {
