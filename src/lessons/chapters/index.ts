@@ -7,6 +7,7 @@ import chapter2 from "./2"
 import chapter3 from "./3"
 import chapter4 from "./4"
 import chapter5 from "./5"
+import chapter6 from "./6"
 
 export const Chapters: Array<TChapter> = [{
     name: "Fundamentals",
@@ -23,4 +24,7 @@ export const Chapters: Array<TChapter> = [{
 }, {
     name: "Vertex Buffers",
     lessons: chapter5,
+}, {
+    name: "Texture",
+    lessons: chapter6,
 }]
