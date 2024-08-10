@@ -57,16 +57,11 @@ function toggleSettings() {
         showSettings.value = false
     }
 }
-
 </script>
 
 <template>
-    <aside
-        class="absolute bottom-2 left-2 flex gap-1 items-end text-white"
-    >
-        <div
-            class="border-2 bg-base bg-opacity-50 gap-1 rounded-full"
-        >
+    <aside class="absolute bottom-2 left-2 flex gap-1 items-end text-white">
+        <div class="border-2 bg-base bg-opacity-50 gap-1 rounded-full">
             <button
                 v-if="animationLoop"
                 class="w-8 h-8 p-0 m-0 hover:text-green"
