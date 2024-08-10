@@ -4,6 +4,7 @@ export default { name: "Lesson" }
 
 <script setup lang="ts">
 import {
+    computed,
     provide,
     ref,
     watch,
@@ -45,6 +46,17 @@ const lesson = ref<IRenderApp | null>(null)
 //    height: 100%;
 // }
 const { devicePixelSize: size } = useResize(canvas)
+
+const resolution = computed(() => {
+    if (lesson.value == null || size.value == null) {
+        return {
+            width: 0,
+            height: 0,
+        }
+    }
+    return lesson.value.resize(size.value)
+})
+
 
 provide(KCurrentRenderApp, lesson)
 
@@ -104,4 +116,7 @@ watch([size, lesson], resize)
         ref="canvas"
     ></canvas>
     <AppInspector @changed="onChanged"/>
+    <aside class="absolute bottom-2 right-2 flex gap-1 items-end text-white">
+        <span v-if="canvas">{{ resolution.width }} x {{ resolution.height }}</span>
+    </aside>
 </template>
