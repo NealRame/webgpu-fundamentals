@@ -3,6 +3,10 @@ import {
 } from "../../../../colors"
 
 import {
+    pixelmapToBitmap,
+} from "../../../../pixelmap"
+
+import {
     RenderApp,
 } from "../../../../renderapp"
 
@@ -14,19 +18,19 @@ const Description = "Fill a quad with a harcoded texture."
 
 const TextureWidth = 5
 const TextureHeight = 7
-const TextureData = ((_, b, y) => new Uint8Array([
-    _, _, _, _, _,
-    _, y, _, _, _,
-    _, y, _, _, _,
-    _, y, y, _, _,
-    _, y, _, _, _,
-    _, y, y, y, _,
-    b, _, _, _, _,
-].flat().map(c => Math.floor(255*c))))(
-    CatppuccinMocha.red,
-    CatppuccinMocha.blue,
-    CatppuccinMocha.yellow,
-)
+const TextureData = pixelmapToBitmap([
+    "_", "_", "_", "_", "_",
+    "_", "y", "_", "_", "_",
+    "_", "y", "_", "_", "_",
+    "_", "y", "y", "_", "_",
+    "_", "y", "_", "_", "_",
+    "_", "y", "y", "y", "_",
+    "b", "_", "_", "_", "_",
+], {
+    _: CatppuccinMocha.red,
+    b: CatppuccinMocha.blue,
+    y: CatppuccinMocha.yellow
+})
 
 export default class extends RenderApp {
     static title_ = Title

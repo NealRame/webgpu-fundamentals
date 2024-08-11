@@ -7,6 +7,10 @@ import {
 } from "../../../../decorators"
 
 import {
+    pixelmapToBitmap,
+} from "../../../../pixelmap"
+
+import {
     RenderApp,
 } from "../../../../renderapp"
 
@@ -18,19 +22,19 @@ const Description = "Playing with the magFilter sampler."
 
 const TextureWidth = 5
 const TextureHeight = 7
-const TextureData = ((_, b, y) => new Uint8Array([
-    _, _, _, _, _,
-    _, y, _, _, _,
-    _, y, _, _, _,
-    _, y, y, _, _,
-    _, y, _, _, _,
-    _, y, y, y, _,
-    b, _, _, _, _,
-].flat().map(c => Math.floor(255*c))))(
-    CatppuccinMocha.red,
-    CatppuccinMocha.blue,
-    CatppuccinMocha.yellow,
-)
+const TextureData = pixelmapToBitmap([
+    "_", "_", "_", "_", "_",
+    "_", "y", "_", "_", "_",
+    "_", "y", "_", "_", "_",
+    "_", "y", "y", "_", "_",
+    "_", "y", "_", "_", "_",
+    "_", "y", "y", "y", "_",
+    "b", "_", "_", "_", "_",
+], {
+    _: CatppuccinMocha.red,
+    b: CatppuccinMocha.blue,
+    y: CatppuccinMocha.yellow
+})
 
 const MagFilters = ["linear", "nearest"] as const
 type TMagFilters = typeof MagFilters[number]
