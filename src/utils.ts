@@ -1,3 +1,7 @@
+import type {
+    TSize,
+} from "./types"
+
 /**
  * Checks if a value is null or undefined.
  *
@@ -61,4 +65,42 @@ export function times<T>(
         a[i] = fn(i, n)
     }
     return a
+}
+
+/**
+ *
+ * @param bitmap the image to scale
+ * @param size the size of the image
+ * @param scale the scale factor
+ * @returns
+ */
+export function scaleImage(
+    bitmap: Uint8Array,
+    { width, height }: TSize,
+    scale: number,
+): Uint8Array {
+    scale = Math.floor(scale)
+
+    if (scale < 1) throw new Error("Scale must be an integer >= 1")
+
+    const bitmapScaled = new Uint8Array(4*bitmap.byteLength)
+
+    for (let k = 0; k < scale; ++k) {
+        for (let y = 0; y < height; ++y) {
+            const rowOffset = y*width*4
+            const rowOffsetScaled = (scale*y + k)*scale*width*4
+
+            for (let x = 0; x < height; ++x) {
+                const colOffset = rowOffset + 4*x
+                const colOffsetScaled = rowOffsetScaled + 4*scale*(x + k)
+
+                bitmapScaled[colOffsetScaled + 0] = bitmap[colOffset + 0]
+                bitmapScaled[colOffsetScaled + 1] = bitmap[colOffset + 1]
+                bitmapScaled[colOffsetScaled + 2] = bitmap[colOffset + 2]
+                bitmapScaled[colOffsetScaled + 3] = bitmap[colOffset + 3]
+            }
+        }
+    }
+
+    return bitmapScaled
 }
