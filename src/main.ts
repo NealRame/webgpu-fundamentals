@@ -19,4 +19,3 @@ import Router from "./router"
         .use(Router)
         .mount("#app")
 })()
-
