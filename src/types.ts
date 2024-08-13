@@ -3,9 +3,17 @@ export type TColorRGBA = [number, number, number, number]
 
 export type TPalette = Record<string, TColorRGBA>
 
-export type TPixelmap<T extends TPalette> = Array<keyof T>
-
 export type TSize = {
     width: number
     height: number
+}
+
+export type TPixelmap<T extends TPalette> = {
+    data: Array<keyof T>
+    size: TSize
+}
+
+export type TBitmapData = {
+    data: Uint8Array
+    size: TSize
 }

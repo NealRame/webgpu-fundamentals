@@ -10,6 +10,10 @@ import {
     RenderApp,
 } from "../../../../renderapp"
 
+import type {
+    TSize,
+} from "../../../../types"
+
 import shaderSource from "./shader.wgsl?raw"
 
 
@@ -18,15 +22,22 @@ const Description = "Fill a quad with a harcoded texture."
 
 const TextureWidth = 5
 const TextureHeight = 7
-const TextureData = pixelmapToBitmap([
-    "_", "_", "_", "_", "_",
-    "_", "y", "_", "_", "_",
-    "_", "y", "_", "_", "_",
-    "_", "y", "y", "_", "_",
-    "_", "y", "_", "_", "_",
-    "_", "y", "y", "y", "_",
-    "b", "_", "_", "_", "_",
-], {
+const TextureSize: TSize = {
+    width: TextureWidth,
+    height: TextureHeight,
+}
+const TextureBitmap = pixelmapToBitmap({
+    data: [
+        "_", "_", "_", "_", "_",
+        "_", "y", "_", "_", "_",
+        "_", "y", "_", "_", "_",
+        "_", "y", "y", "_", "_",
+        "_", "y", "_", "_", "_",
+        "_", "y", "y", "y", "_",
+        "b", "_", "_", "_", "_",
+    ],
+    size: TextureSize,
+}, {
     _: CatppuccinMocha.red,
     b: CatppuccinMocha.blue,
     y: CatppuccinMocha.yellow
@@ -77,7 +88,7 @@ export default class extends RenderApp {
         })
         device.queue.writeTexture(
             { texture },
-            TextureData,
+            TextureBitmap.data,
             { bytesPerRow: 4*TextureWidth },
             { width: TextureWidth, height: TextureHeight },
         )

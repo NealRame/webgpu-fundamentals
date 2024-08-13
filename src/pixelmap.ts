@@ -1,4 +1,5 @@
 import type {
+    TBitmapData,
     TPalette,
     TPixelmap,
 } from "./types"
@@ -13,11 +14,13 @@ export function Pixelmap<P extends TPalette>(
 export function pixelmapToBitmap<P extends TPalette>(
     pixelmap: TPixelmap<P>,
     palette: P,
-): Uint8Array {
-    return new Uint8Array(
-        pixelmap
+): TBitmapData {
+    return {
+        data: new Uint8Array(pixelmap.data
             .map(s => palette[s])
             .flat()
             .map(c => Math.floor(255*c))
-    )
+        ),
+        size: pixelmap.size,
+    }
 }
