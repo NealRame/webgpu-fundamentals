@@ -1,7 +1,6 @@
 import {
     mat4,
     vec3,
-    ReadonlyVec3,
 } from "gl-matrix"
 
 import {
@@ -19,7 +18,6 @@ import {
 
 import type {
     TColorRGBA,
-    TSize,
     TBitmapData,
 } from "../../../../types"
 
@@ -69,23 +67,6 @@ const TextureBitmap = pixelmapToBitmap({
     a: CatppuccinMocha.sapphire,
 })
 
-const SampleFilters = ["linear", "nearest"] as const
-type TSampleFilter = typeof SampleFilters[number]
-
-function SampleFilter(
-    sampleFilter: TSampleFilter,
-): TSampleFilter {
-    return sampleFilter
-}
-
-const UVAddressModes = ["repeat", "clamp-to-edge"] as const
-type TUVAddressMode = typeof UVAddressModes[number]
-
-function UVAddressMode(
-    addressMode: TUVAddressMode,
-): TUVAddressMode {
-    return addressMode
-}
 
 function lerp(a: number, b: number, t: number): number {
     return a + (b - a)*t
@@ -256,8 +237,6 @@ export default class extends RenderApp {
     private objectInfos_: Array<TObjectInfo>
 
     private textures_: [GPUTexture, GPUTexture]
-
-    private offset_: [number, number] = [0, 0]
 
     public constructor(
         canvas: HTMLCanvasElement,
