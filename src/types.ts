@@ -14,6 +14,6 @@ export type TPixelmap<T extends TPalette> = {
 }
 
 export type TBitmapData = {
-    data: Uint8Array
+    data: Uint8Array | Uint8ClampedArray
     size: TSize
 }

@@ -51,3 +51,11 @@ export function randRGB(
     const index = Math.floor(rand(colors.length))
     return colors[index]
 }
+
+export function cssColor(color: TColorRGBA): string {
+    const r = Math.floor(color[0]*255)
+    const g = Math.floor(color[1]*255)
+    const b = Math.floor(color[2]*255)
+
+    return `rgba(${r}, ${g}, ${b}, ${color[3]})`
+}
