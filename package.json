@@ -23,6 +23,7 @@
     "esbuild-style-plugin": "^1.6.3",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.24.0",
+    "gl-matrix": "^3.4.3",
     "portscanner": "^2.2.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
